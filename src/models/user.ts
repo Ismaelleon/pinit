@@ -1,28 +1,35 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
-	email: String,
-	password: String,
+	email: {
+		type: String,
+		required: true,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
 	birthday: String,
-	boards: [String],
-	pins: [
+	activationKey: {
+		type: String,
+		required: true,
+	},
+	activated: {
+		type: Boolean,
+		default: false,
+	},
+	boards: [
 		{
 			title: String,
-			content: String,
-			image: {
-				url: String,
-				public_id: String,
-			},
-			url: String,
-			board: String,
-		},
-	],
+			pins: [String],
+		}
+	]
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
 	try {
-		let hashedPassword = await bcrypt.hash(this.password, 10);
+		const hashedPassword = await bcrypt.hash(this.password, 10);
 
 		this.password = hashedPassword;
 		next();
@@ -31,6 +38,6 @@ userSchema.pre("save", async function (next) {
 	}
 });
 
-const User = mongoose.model("user", userSchema, "users");
+const User = mongoose.model('user', userSchema, 'users');
 
 export default User;

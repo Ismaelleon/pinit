@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import path from "path";
 import mongoose from "mongoose";
 import multer from "multer";
-import { signUp, logIn } from "../controllers/auth";
+import { signUp, logIn, activate } from "../controllers/auth";
 import { newPin, getPin } from "../controllers/pin";
 import { newBoard } from "../controllers/board";
 import { getUser } from "../controllers/user";
@@ -27,6 +27,7 @@ const router: Router = express.Router();
 
 router.post("/sign-up", signUp);
 router.post("/log-in", logIn);
+router.get("/activate/:activation_key", activate);
 
 router.post("/boards/new", newBoard);
 

@@ -4,10 +4,11 @@ import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
 import User from "../models/user";
+import Pin from '../models/pin';
 
 async function newPin(req: Request, res: Response) {
 	try {
-		let email = await jwt.verify(
+		let email = jwt.verify(
 			req.cookies.token,
 			process.env.JWT_SECRET!
 		);
@@ -19,7 +20,6 @@ async function newPin(req: Request, res: Response) {
 		}
 
 		const { title, content, url, board } = req.body;
-		const _id = new mongoose.Types.ObjectId();
 		const imageFileName = req.file?.filename;
 		const options = {
 			overwrite: true,
@@ -32,7 +32,7 @@ async function newPin(req: Request, res: Response) {
 			options
 		);
 
-		user.pins.push({
+		let newPin = new Pin({
 			title,
 			content,
 			url,
@@ -41,12 +41,12 @@ async function newPin(req: Request, res: Response) {
 				public_id: result.public_id,
 			},
 			board,
-			_id,
+			author: user.name,
 		});
 
-		await user.save();
+		await newPin.save();
 
-		return res.json({ id: _id }).end();
+		return res.json({ id: newPin._id }).end();
 	} catch (err) {
 		console.log(err);
 	}
@@ -56,24 +56,13 @@ async function getPin(req: Request, res: Response) {
 	try {
 		const { id } = req.params;
 
-		const users = await User.find({});
-		let pins: any = [];
+		const pin = await Pin.findOne({ _id: id });
 
-		for (let user of users) {
-			for (let pin of user.pins) {
-				pins.push(pin);
-			}
+		if (pin === null) {
+			res.sendStatus(404).end();
 		}
 
-		pins = pins.filter((pin: any) => {
-			return pin._id.toString() === id;
-		});
-
-		if (pins.length === 0) {
-			return res.sendStatus(404).end();
-		}
-
-		return res.json(pins[0]).end();
+		return res.json(pin).end();
 	} catch (err) {
 		console.log(err);
 	}

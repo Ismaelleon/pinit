@@ -7,12 +7,17 @@ import Index from "./routes/index";
 import Home from "./routes/home";
 import Create from "./routes/create";
 import Pin from "./routes/pin";
+import Activate from "./routes/activate";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
 		element: <Index />,
 	},
+    {
+        path: "/activate/:activation_key",
+        element: <Activate />,
+    },
 	{
 		path: "/home",
 		element: <Home />,

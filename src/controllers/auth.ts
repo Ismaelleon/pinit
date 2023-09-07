@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
-import * as jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import User from "../models/user";
+import { Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import User from '../models/user';
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
 async function signUp(req: Request, res: Response) {
 	try {
@@ -13,17 +15,38 @@ async function signUp(req: Request, res: Response) {
 			return res.status(409).end();
 		}
 
+        let activationKey = crypto.randomBytes(16).toString('hex');
+
 		const newUser = new User({
 			email,
 			password,
+            URL,
 			date,
+            activationKey,
 		});
 
 		await newUser.save();
 
-		let token = jwt.sign(email, process.env.JWT_SECRET!);
+        const transporter = nodemailer.createTransport({
+            host: 'sandbox.smtp.mailtrap.io',
+            port: 2525,
+            auth: {
+                user: process.env.MAIL_USER,
+                pass: process.env.MAIL_PASSWORD,
+            },
+        });
 
-		return res.cookie("token", token).end();
+        await transporter.sendMail({
+            from: 'mail@pinit.com',
+            to: email,
+            subject: 'Activate your account',
+            text: '',
+            html: `<a href="http://${process.env.DOMAIN}/activate/${activationKey}">Activate your account</button>`,
+        });
+
+		const token = jwt.sign(email, process.env.JWT_SECRET!);
+
+		return res.cookie('token', token).end();
 	} catch (err) {
 		console.log(err);
 	}
@@ -42,8 +65,8 @@ async function logIn(req: Request, res: Response) {
 		const passwordMatches = await bcrypt.compare(password, user.password);
 
 		if (passwordMatches) {
-			let token = jwt.sign(email, process.env.JWT_SECRET!);
-			return res.cookie("token", token).end();
+			const token = jwt.sign(email, process.env.JWT_SECRET!);
+			return res.cookie('token', token).end();
 		}
 
 		return res.sendStatus(401).end();
@@ -52,4 +75,23 @@ async function logIn(req: Request, res: Response) {
 	}
 }
 
-export { signUp, logIn };
+async function activate (req: Request, res: Response) {
+    try {
+        let { activation_key: activationKey } = req.params;
+
+        let user = await User.findOne({ activationKey });
+
+        if (user === null) {
+            return res.status(404).end(); 
+        }
+
+        user.activated = true;
+        await user.save();
+
+        res.end();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export { signUp, logIn, activate };
