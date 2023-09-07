@@ -7,9 +7,15 @@ import crypto from 'crypto';
 
 async function signUp(req: Request, res: Response) {
 	try {
-		const { email, password, date } = req.body;
+		const { name, email, password, date } = req.body;
 
-		const user = await User.findOne({ email });
+		let user = await User.findOne({ email });
+
+		if (user !== null) {
+			return res.status(409).end();
+		}
+
+        user = await User.findOne({ name });
 
 		if (user !== null) {
 			return res.status(409).end();
@@ -18,6 +24,7 @@ async function signUp(req: Request, res: Response) {
         let activationKey = crypto.randomBytes(16).toString('hex');
 
 		const newUser = new User({
+            name,
 			email,
 			password,
             URL,
@@ -63,6 +70,7 @@ async function logIn(req: Request, res: Response) {
 		}
 
 		const passwordMatches = await bcrypt.compare(password, user.password);
+        console.log(password, user.password, passwordMatches);
 
 		if (!passwordMatches) {
             return res.sendStatus(401).end();

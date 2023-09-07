@@ -7,7 +7,8 @@ interface Props {
 }
 
 export default function SignUp(props: Props) {
-	const [email, setEmail] = useState({ value: "", valid: true }),
+    const [name, setName] = useState({ value: "", valid: true }),
+        [email, setEmail] = useState({ value: "", valid: true }),
 		[password, setPassword] = useState({ value: "", valid: true }),
 		[birthday, setBirthday] = useState({ value: "", valid: true }),
 		[error, setError] = useState(false);
@@ -16,24 +17,28 @@ export default function SignUp(props: Props) {
 
 	function submitForm(event: Event) {
 		event.preventDefault();
-		fetch("/api/sign-up", {
-			method: "post",
-			body: JSON.stringify({
-				email: email.value,
-				password: password.value,
-				birthday: birthday.value,
-			}),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		}).then((res) => {
-			if (res.status === 200) {
-				navigate("/home");
-			} else {
-				setEmail({ value: email.value, valid: false });
-				setError(true);
-			}
-		});
+
+        if (name.valid && email.valid && password.valid && birthday.valid) {
+            fetch("/api/sign-up", {
+                method: "post",
+                body: JSON.stringify({
+                    name: name.value,
+                    email: email.value,
+                    password: password.value,
+                    birthday: birthday.value,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }).then((res) => {
+                if (res.status === 200) {
+                    setError(false);
+                    navigate("/home");
+                } else {
+                    setError(true);
+                }
+            });
+        }
 	}
 
 	return (
@@ -68,7 +73,32 @@ export default function SignUp(props: Props) {
 				</h2>
 				<p className="text-center mb-3">Find new ideas to experiment</p>
 				<form className="flex flex-col mt-3">
-					<label className="text-base">E-mail</label>
+                    <label className="text-base">Name</label>
+					<input
+						type="text"
+						className={`p-2 ${
+							name.valid
+								? "border-neutral-200"
+								: "border-red-400"
+						} border text-base rounded`}
+						placeholder="p1nt3r3st"
+						onInput={(e) => {
+							let value = e.currentTarget.value;
+							let valid = value.length > 5;
+
+							setName({ value, valid });
+							setError(false);
+						}}
+					/>
+					<span
+						className="text-sm mt-1 d-block mr-auto text-red-400"
+						style={
+							error ? { display: "block" } : { display: "none" }
+						}
+					>
+                        Name is too short or is already used
+					</span>
+					<label className="text-base mt-3">E-mail</label>
 					<input
 						type="email"
 						className={`p-2 ${

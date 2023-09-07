@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 
 const userSchema: mongoose.Schema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
 	email: {
 		type: String,
 		required: true,
@@ -29,8 +33,11 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 
 userSchema.pre('save', async function (next) {
 	try {
-		const hashedPassword = await bcrypt.hash(this.password, 10);
+        let user = this;
+        
+        if (!user.isModified('password')) return next();
 
+		const hashedPassword = await bcrypt.hash(user.password, 10);
 		this.password = hashedPassword;
 		next();
 	} catch (err) {
