@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { BiExit, BiPlus } from "react-icons/bi";
+import { BiPlus } from "react-icons/bi";
 
 export default function Create() {
 	const [title, setTitle] = useState(""),
@@ -156,8 +156,8 @@ export default function Create() {
 									Create new Board
 								</option>
 								{boards.map((board, index) => (
-									<option value={board} key={index}>
-										{board}
+									<option value={board.name} key={index}>
+										{board.name}
 									</option>
 								))}
 							</select>

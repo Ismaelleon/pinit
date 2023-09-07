@@ -21,7 +21,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 	},
 	boards: [
 		{
-			title: String,
+			name: String,
 			pins: [String],
 		}
 	]

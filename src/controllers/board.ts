@@ -13,7 +13,7 @@ async function newBoard(req: Request, res: Response) {
 
 		const { name } = req.body;
 
-		user.boards.push(name);
+		user.boards.push({ name, pins: [] });
 		await user.save();
 
 		return res.sendStatus(200).end();
