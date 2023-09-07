@@ -9,6 +9,10 @@ const pinSchema = new mongoose.Schema({
 	},
 	url: String,
 	author: String,
+    board: {
+        type: String,
+        required: true,
+    },
 });
 
 const pin = mongoose.model('pin', pinSchema, 'pins');

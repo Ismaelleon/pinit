@@ -36,6 +36,7 @@ export default function Pin() {
 					<img src={pin.image.url} className="w-full rounded mb-3 sm:w-1/2" />
 					<section className="sm:w-1/2">
 						<h2 className="text-xl font-bold">{pin.title}</h2>
+                        <h3 className="text-base font-bold">{pin.author}</h3>
 						<p className="text-base">{pin.content}</p>
 					</section>
 				</section>

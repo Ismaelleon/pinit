@@ -58,7 +58,7 @@ export default function Create() {
 		body.append("content", content);
 		body.append("url", url);
 		body.append("image", image);
-		body.append("board", board);
+		body.append("boardName", board);
 
 		fetch("/api/pin/new", {
 			method: "post",

@@ -19,7 +19,7 @@ async function newPin(req: Request, res: Response) {
 			return res.sendStatus(401).end();
 		}
 
-		const { title, content, url, board } = req.body;
+		const { title, content, url, boardName } = req.body;
 		const imageFileName = req.file?.filename;
 		const options = {
 			overwrite: true,
@@ -32,6 +32,7 @@ async function newPin(req: Request, res: Response) {
 			options
 		);
 
+        let pinId = new mongoose.mongo.ObjectId();
 		let newPin = new Pin({
 			title,
 			content,
@@ -40,11 +41,20 @@ async function newPin(req: Request, res: Response) {
 				url: result.secure_url,
 				public_id: result.public_id,
 			},
-			board,
+			board: boardName,
 			author: user.name,
+            _id: pinId,
 		});
 
 		await newPin.save();
+
+        for (let i = 0; i < user.boards.length; i++) {
+            if (user.boards[i].name === boardName) {
+                user.boards[i].pins.push(pinId.toString());
+            }
+        }
+
+        await user.save();
 
 		return res.json({ id: newPin._id }).end();
 	} catch (err) {
