@@ -93,7 +93,7 @@ export default function Create() {
 									setImage(e.currentTarget.files[0])
 								}
 							/>
-                            <img className="w-full" src={image === null ? '' : URL.createObjectURL(image)}/>
+                            <img className="w-full rounded" src={image === null ? '' : URL.createObjectURL(image)}/>
                             <header className="flex flex-row justify-end p-2" style={ image === null ? { display: 'none' } : { display: 'flex' } }>
                                 <button className="p-2 rounded-full bg-neutral-200" onClick={e => {
                                     e.preventDefault();
