@@ -64,12 +64,12 @@ async function logIn(req: Request, res: Response) {
 
 		const passwordMatches = await bcrypt.compare(password, user.password);
 
-		if (passwordMatches) {
-			const token = jwt.sign(email, process.env.JWT_SECRET!);
-			return res.cookie('token', token).end();
+		if (!passwordMatches) {
+            return res.sendStatus(401).end();
 		}
 
-		return res.sendStatus(401).end();
+        const token = jwt.sign(email, process.env.JWT_SECRET!);
+        return res.cookie('token', token).end();
 	} catch (err) {
 		console.log(err);
 	}
