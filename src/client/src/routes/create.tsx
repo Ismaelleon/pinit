@@ -1,7 +1,7 @@
 import { createRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
-import { BiPlus } from "react-icons/bi";
+import { BiExit, BiPlus } from "react-icons/bi";
 
 export default function Create() {
 	const [title, setTitle] = useState(""),
@@ -82,7 +82,7 @@ export default function Create() {
 						New Pin
 					</h1>
 					<form className="flex flex-col sm:flex-row w-full gap-3">
-						<section className="sm:w-1/2">
+						<section className="sm:w-1/2 relative">
 							<input
 								type="file"
 								className="hidden"
@@ -93,9 +93,30 @@ export default function Create() {
 									setImage(e.currentTarget.files[0])
 								}
 							/>
+                            <img className="w-full" src={image === null ? '' : URL.createObjectURL(image)}/>
+                            <header className="flex flex-row justify-end p-2" style={ image === null ? { display: 'none' } : { display: 'flex' } }>
+                                <button className="p-2 rounded-full bg-neutral-200" onClick={e => {
+                                    e.preventDefault();
+                                    setImage(null);
+                                }}>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        fill="currentColor"
+                                        className="w-6 h-6"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+                            </header>
 							<label
 								className="w-full p-3 flex justify-center items-center flex-col border border-dashed border-neutral-400 rounded mb-3 cursor-pointer h-full"
 								htmlFor="image"
+                                style={ image === null ? { display: 'flex' } : { display: 'none' } }
 							>
 								<BiPlus size={32} />
 								<span className="text-base sm:text-sm">
