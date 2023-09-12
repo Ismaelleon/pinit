@@ -1,10 +1,11 @@
-import express, { Application } from "express";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import router from "./routes/index";
-import { v2 as cloudinary } from "cloudinary";
+import express, { Application } from 'express';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import router from './routes/index';
+import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
 
-require("dotenv").config();
+dotenv.config();
 
 cloudinary.config({
 	secure: true,
@@ -19,7 +20,7 @@ const port = process.env.PORT || 8080;
 // middlewares
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use("/api", router);
+app.use('/api', router);
 
 app.listen(port, () => {
 	console.log(`app running on port ${port}`);
