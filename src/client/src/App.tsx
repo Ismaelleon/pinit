@@ -8,6 +8,8 @@ import Home from "./routes/home";
 import Create from "./routes/create";
 import Pin from "./routes/pin";
 import Activate from "./routes/activate";
+import Profile from "./routes/profile";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 const router = createBrowserRouter([
 	{
@@ -30,12 +32,20 @@ const router = createBrowserRouter([
 		path: "/pin/:id",
 		element: <Pin />,
 	},
+    {
+        path: "/profile",
+        element: <Profile />
+    }
 ]);
+
+const queryClient = new QueryClient();
 
 function App() {
 	return (
 		<React.StrictMode>
-			<RouterProvider router={router} />
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router} />
+            </QueryClientProvider>
 		</React.StrictMode>
 	);
 }

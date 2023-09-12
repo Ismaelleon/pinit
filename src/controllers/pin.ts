@@ -8,12 +8,12 @@ import Pin from '../models/pin';
 
 async function newPin(req: Request, res: Response) {
 	try {
-		let email = jwt.verify(
+		let name = jwt.verify(
 			req.cookies.token,
 			process.env.JWT_SECRET!
 		);
 
-		let user = await User.findOne({ email });
+		let user = await User.findOne({ name });
 
 		if (user === null) {
 			return res.sendStatus(401).end();
@@ -50,6 +50,10 @@ async function newPin(req: Request, res: Response) {
 
         for (let i = 0; i < user.boards.length; i++) {
             if (user.boards[i].name === boardName) {
+                if (user.boards[i].pins.length === 0) {
+                    user.boards[i].thumbnail = result.secure_url;
+                }
+
                 user.boards[i].pins.push(pinId.toString());
             }
         }
@@ -69,7 +73,7 @@ async function getPin(req: Request, res: Response) {
 		const pin = await Pin.findOne({ _id: id });
 
 		if (pin === null) {
-			res.sendStatus(404).end();
+			return res.sendStatus(404).end();
 		}
 
 		return res.json(pin).end();
