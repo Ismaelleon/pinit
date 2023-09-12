@@ -1,20 +1,28 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../models/user";
 
 async function getUser(req: Request, res: Response) {
-	try {
-		const email = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
-		const user = await User.findOne({ email }).select("boards pins");
+    try {
+        let name = req.query.name;
 
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (name === undefined) {
+            let payload: string | JwtPayload  = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
 
-		return res.json(user).end();
-	} catch (err) {
-		console.log(err);
-	}
+            //@ts-ignore
+            name = payload;
+        }
+
+        const user = await User.findOne({ name }).select("name boards");
+
+        if (user === null) {
+            return res.sendStatus(401).end();
+        }
+
+        return res.json(user).end();
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export { getUser };

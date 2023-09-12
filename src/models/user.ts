@@ -27,6 +27,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 		{
 			name: String,
 			pins: [String],
+            thumbnail: String,
 		}
 	]
 });

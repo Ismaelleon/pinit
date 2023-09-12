@@ -51,7 +51,7 @@ async function signUp(req: Request, res: Response) {
             html: `<a href="http://${process.env.DOMAIN}/activate/${activationKey}">Activate your account</button>`,
         });
 
-		const token = jwt.sign(email, process.env.JWT_SECRET!);
+		const token = jwt.sign(name, process.env.JWT_SECRET!);
 
 		return res.cookie('token', token).end();
 	} catch (err) {
@@ -70,13 +70,12 @@ async function logIn(req: Request, res: Response) {
 		}
 
 		const passwordMatches = await bcrypt.compare(password, user.password);
-        console.log(password, user.password, passwordMatches);
 
 		if (!passwordMatches) {
             return res.sendStatus(401).end();
 		}
 
-        const token = jwt.sign(email, process.env.JWT_SECRET!);
+        const token = jwt.sign(user.name, process.env.JWT_SECRET!);
         return res.cookie('token', token).end();
 	} catch (err) {
 		console.log(err);
