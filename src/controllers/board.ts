@@ -60,6 +60,8 @@ async function getBoard(req: Request, res: Response) {
             board.pins[i] = pin;
         }
 
+        board.pins.reverse();
+
         return res.json(board).end();
     } catch (err) {
         console.log(err);
