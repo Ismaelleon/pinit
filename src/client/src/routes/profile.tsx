@@ -1,11 +1,12 @@
 import React from 'react';
 import Navbar from '../components/navbar';
-import { BiSolidUserCircle } from 'react-icons/bi';
+import { BiExit, BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../components/loading';
 
 export default function Profile () {
+    const navigate = useNavigate();
     const { isLoading, error, data } = useQuery('userData', async () => {
         try {
             const res = await fetch('/api/user', {
@@ -34,7 +35,16 @@ export default function Profile () {
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <BiSolidUserCircle size={64} />
-                            <h1 className="text-2xl font-bold mb-3 sm:text-xl">{data.name!}</h1>                 
+                            <span className="flex flex-row items-center">
+                                <h1 className="text-2xl font-bold mb-3 sm:text-xl">{data.name!}</h1>                 
+                                <button className="p-2 hover:bg-neutral-200 rounded-full ml-2 -translate-y-1/4" 
+                                        onClick={() => {
+                                            document.cookie = 'token=;Expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+                                            navigate('/');
+                                        }}>
+                                    <BiExit className="text-xl text-red-500" />
+                                </button>
+                            </span>
                         </header>
                         {data.boards.length > 0 && (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
