@@ -26,7 +26,7 @@ export default function User () {
 
     if (error) return 'Error';
 
-    if (data !== undefined) {
+    if ('boards' in data) {
         return (
             <>
                 <Navbar />
