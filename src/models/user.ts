@@ -26,7 +26,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 	boards: [
 		{
 			name: String,
-			pins: [String],
+			pins: [],
             thumbnail: String,
 		}
 	]

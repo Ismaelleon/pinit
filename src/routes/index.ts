@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import { signUp, logIn, activate } from "../controllers/auth";
 import { newPin, getPin } from "../controllers/pin";
-import { newBoard } from "../controllers/board";
+import { newBoard, getBoard } from "../controllers/board";
 import { getUser } from "../controllers/user";
 
 // Connect to database
@@ -29,7 +29,8 @@ router.post("/sign-up", signUp);
 router.post("/log-in", logIn);
 router.get("/activate/:activation_key", activate);
 
-router.post("/boards/new", newBoard);
+router.post("/board/new", newBoard);
+router.post("/board/:id", getBoard);
 
 router.post("/pin/new", upload.single("image"), newPin);
 router.post("/pin/:id", getPin);
