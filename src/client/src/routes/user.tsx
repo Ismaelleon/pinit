@@ -3,6 +3,7 @@ import Navbar from '../components/navbar';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
 import { Link, useLocation } from 'react-router-dom';
+import Loading from '../components/loading';
 
 export default function User () {
     const location = useLocation();
@@ -22,7 +23,7 @@ export default function User () {
         }
     });
 
-    if (isLoading) return 'Loading...';
+    if (isLoading) return <Loading />;
 
     if (error) return 'Error';
 
