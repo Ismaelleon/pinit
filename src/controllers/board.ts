@@ -78,6 +78,9 @@ async function deleteBoard (req: Request, res: Response) {
 			return res.sendStatus(401).end();
         }
 
+        let board = user.boards.filter((board: Board) => board._id.toString() === id);
+        await Pin.deleteMany({ board: board[0].name });
+        
         user.boards = user.boards.filter((board: Board) => board._id.toString() !== id);
 
         await user.save();
