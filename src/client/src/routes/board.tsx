@@ -54,7 +54,11 @@ export default function Board () {
                 <main className="flex justify-center mt-[64px] p-4">
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
-                            <h1 className="text-2xl font-bold mb-3 sm:text-xl">{data.name}</h1>                 
+                            <h1 className="text-2xl font-bold sm:text-xl">{data.name}</h1>                 
+                            <p className="mb-3">
+                                Created by  
+                                <Link to={`/user/${data.pins[0].author}`} className="font-bold"> {data.pins[0].author}</Link>
+                            </p>
                         </header>
                         {data.pins.length > 0 && (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
