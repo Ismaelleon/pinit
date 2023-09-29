@@ -33,7 +33,7 @@ export default function Create() {
 	function createBoard(event: Event) {
 		event.preventDefault();
 
-		fetch("/api/boards/new", {
+		fetch("/api/board/new", {
 			method: "POST",
 			body: JSON.stringify({
 				name: newBoard,
