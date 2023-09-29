@@ -79,7 +79,9 @@ async function getLatestPins (req: Request, res: Response) {
 			return res.sendStatus(401).end();
 		}
 
-        const pins = await Pin.find({}).sort({ date: 1 }).limit(20);
+        const pins = await Pin.find({}).limit(20);
+
+        pins.reverse();
 
         return res.json(pins).end();
     } catch (err) {
