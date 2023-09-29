@@ -1,5 +1,6 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "./index.css";
 
 // Import routes
@@ -9,7 +10,7 @@ import Create from "./routes/create";
 import Pin from "./routes/pin";
 import Activate from "./routes/activate";
 import Profile from "./routes/profile";
-import { QueryClient, QueryClientProvider } from "react-query";
+import Board from "./routes/board";
 
 const router = createBrowserRouter([
 	{
@@ -35,10 +36,20 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />
-    }
+    },
+    {
+        path: "/board/:id",
+        element: <Board />
+    },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 function App() {
 	return (
