@@ -11,6 +11,7 @@ import Pin from "./routes/pin";
 import Activate from "./routes/activate";
 import Profile from "./routes/profile";
 import Board from "./routes/board";
+import User from "./routes/user";
 
 const router = createBrowserRouter([
 	{
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     {
         path: "/profile",
         element: <Profile />
+    },
+    {
+        path: "/user/:name",
+        element: <User />
     },
     {
         path: "/board/:id",

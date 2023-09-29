@@ -2,12 +2,13 @@ import React from 'react';
 import Navbar from '../components/navbar';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-export default function Profile () {
+export default function User () {
+    const location = useLocation();
     const { isLoading, error, data } = useQuery('userData', async () => {
         try {
-            const res = await fetch('/api/user', {
+                const res = await fetch(`/api/user?name=${location.pathname.split('/')[2]}`, {
                 method: 'POST',
             });
 
@@ -25,7 +26,7 @@ export default function Profile () {
 
     if (error) return 'Error';
 
-    if ('boards' in data) {
+    if (data !== undefined) {
         return (
             <>
                 <Navbar />
