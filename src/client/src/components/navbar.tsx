@@ -11,7 +11,7 @@ export default function Navbar() {
 	}, []);
 
 	return (
-		<nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center">
+		<nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50">
 			<div className="flex justify-between items-center max-w-4xl w-full">
 				<Link to="/home" className="text-xl font-bold mr-6">
 					Pinit
