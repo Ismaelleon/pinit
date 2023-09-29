@@ -6,10 +6,11 @@ interface Props {
     userName: string;
     pinAuthor: string;
     pinId: string;
+    image: string;
     filled: Boolean;
 };
 
-export default function PinOptions ({ userName, pinAuthor, pinId, filled }: Props) {
+export default function PinOptions ({ userName, pinAuthor, pinId, image, filled }: Props) {
     const [options, setOptions] = useState(false);
     const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ export default function PinOptions ({ userName, pinAuthor, pinId, filled }: Prop
                 <BiDotsHorizontal size={24} />
                 <ul className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2"
                     style={options ? { display: 'flex' } : { display: 'none' }}>
-                    <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm" onClick={() => window.open(data.image.url)}>
+                    <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm" onClick={() => window.open(image)}>
                         <BiDownload className="float-left ml-1 mr-2" size={18} /> Download Image
                     </li>
                     {userName === pinAuthor && (
