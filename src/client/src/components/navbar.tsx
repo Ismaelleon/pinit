@@ -24,8 +24,9 @@ export default function Navbar() {
 								: "font-normal"
 						}`}
 					>
-						<Link to="/home" className="text-sm">
-							{mobile ? <BiHome size={24} /> : "Home"}
+						<Link to="/home" className="text-sm flex flex-row items-center">
+                            <BiHome className="sm:mr-2 text-xl sm:text-lg" />
+                            <p className="hidden sm:flex">Home</p>
 						</Link>
 					</li>
 					<li
@@ -35,8 +36,9 @@ export default function Navbar() {
 								: "font-normal"
 						}`}
 					>
-						<Link to="/create" className="text-sm">
-							{mobile ? <BiPlus size={24} /> : "Create"}
+						<Link to="/create" className="text-sm flex flex-row items-center">
+                            <BiPlus className="sm:mr-2 text-xl sm:text-lg" />
+                            <p className="hidden sm:flex">Create</p>
 						</Link>
 					</li>
 					<li>
