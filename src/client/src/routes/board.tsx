@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import Navbar from '../components/navbar';
 import { useQuery } from 'react-query';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Loading from '../components/loading';
 import Pin from '../components/pin';
+import { BiDotsHorizontal, BiTrash } from 'react-icons/bi';
 
 export default function Board () {
     const [userData, setUserData] = useState({
         name: '',
     });
+    const [options, setOptions] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const { isLoading, error, data } = useQuery('boardData', async () => {
         try {
@@ -43,6 +46,20 @@ export default function Board () {
         }
     }
 
+    async function deleteBoard (boardId: string) {
+        try {
+            const res = await fetch(`/api/board/delete/${boardId}`, {
+                method: 'POST',
+            });
+
+            if (res.status === 200) {
+                navigate(-1); 
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     if (isLoading) return <Loading />;
 
     if (error) return 'Error';
@@ -54,7 +71,21 @@ export default function Board () {
                 <main className="flex justify-center mt-[64px] p-4">
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
-                            <h1 className="text-2xl font-bold sm:text-xl">{data.name}</h1>                 
+                            <span className="flex justify-between flex-row">
+                                <h1 className="text-2xl font-bold sm:text-xl">{data.name}</h1>                 
+                                {userData.name === data.pins[0].author && (
+                                    <button className="p-2 hover:bg-neutral-200 relative rounded-full" onClick={() => setOptions(!options)}>
+                                        <BiDotsHorizontal className="text-2xl" />
+                                        <ul className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
+                                            style={options ? { display: 'flex' } : { display: 'none' }}>
+                                            <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500" 
+                                                onClick={() => deleteBoard(data._id)}>
+                                                <BiTrash className="float-left ml-1 mr-2 text-lg" /> Delete Board 
+                                            </li>
+                                        </ul>
+                                    </button>
+                                )}
+                            </span>
                             <p className="mb-3">
                                 Created by  
                                 <Link to={`/user/${data.pins[0].author}`} className="font-bold"> {data.pins[0].author}</Link>
