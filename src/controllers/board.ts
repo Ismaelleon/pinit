@@ -68,4 +68,24 @@ async function getBoard(req: Request, res: Response) {
     }
 }
 
-export { newBoard, getBoard };
+async function deleteBoard (req: Request, res: Response) {
+    try {
+		const name = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
+        const user = await User.findOne({ name });
+        const { id } = req.params;
+
+        if (user === null) {
+			return res.sendStatus(401).end();
+        }
+
+        user.boards = user.boards.filter((board: Board) => board._id.toString() !== id);
+
+        await user.save();
+        
+        return res.end(); 
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export { newBoard, getBoard, deleteBoard };
