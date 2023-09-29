@@ -3,7 +3,7 @@ import path from "path";
 import mongoose from "mongoose";
 import multer from "multer";
 import { signUp, logIn, activate } from "../controllers/auth";
-import { newPin, getPin } from "../controllers/pin";
+import { newPin, getPin, deletePin } from "../controllers/pin";
 import { newBoard, getBoard } from "../controllers/board";
 import { getUser } from "../controllers/user";
 
@@ -34,6 +34,7 @@ router.post("/board/:id", getBoard);
 
 router.post("/pin/new", upload.single("image"), newPin);
 router.post("/pin/:id", getPin);
+router.post("/pin/delete/:id", deletePin);
 
 router.post("/user", getUser);
 

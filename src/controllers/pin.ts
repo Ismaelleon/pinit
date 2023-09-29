@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 import User from "../models/user";
 import Pin from '../models/pin';
 
-async function newPin(req: Request, res: Response) {
+async function newPin (req: Request, res: Response) {
 	try {
 		let name = jwt.verify(
 			req.cookies.token,
@@ -66,7 +66,7 @@ async function newPin(req: Request, res: Response) {
 	}
 }
 
-async function getPin(req: Request, res: Response) {
+async function getPin (req: Request, res: Response) {
 	try {
 		const { id } = req.params;
 
@@ -82,4 +82,46 @@ async function getPin(req: Request, res: Response) {
 	}
 }
 
-export { newPin, getPin };
+async function deletePin (req: Request, res: Response) {
+    try {
+		let name = jwt.verify(
+			req.cookies.token,
+			process.env.JWT_SECRET!
+		);
+
+		let user = await User.findOne({ name });
+
+		if (user === null) {
+			return res.sendStatus(401).end();
+		}
+
+        let { id } = req.params;
+        const pin = await Pin.findOne({ _id: id });
+
+        if (pin === null) {
+            return res.sendStatus(404).end();
+        }
+
+        if (pin.author === user.name) {
+            await Pin.deleteOne({ _id: id });
+
+            for (let i = 0; i < user.boards.length; i++) {
+                if (user.boards[i].pins.includes(id)) {
+                    for (let j = 0; j < user.boards[i].pins.length; j++) {
+                        if (user.boards[i].pins[j] === id) {
+                            user.boards[i].pins.splice(j, 1); 
+                        }
+                    }
+                }
+            }
+
+            await user.save();
+        }
+
+        return res.end();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export { newPin, getPin, deletePin };
