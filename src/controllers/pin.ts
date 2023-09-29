@@ -66,6 +66,27 @@ async function newPin (req: Request, res: Response) {
 	}
 }
 
+async function getLatestPins (req: Request, res: Response) {
+    try {
+		let name = jwt.verify(
+			req.cookies.token,
+			process.env.JWT_SECRET!
+		);
+
+		let user = await User.findOne({ name });
+
+		if (user === null) {
+			return res.sendStatus(401).end();
+		}
+
+        const pins = await Pin.find({}).sort({ date: 1 }).limit(20);
+
+        return res.json(pins).end();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 async function getPin (req: Request, res: Response) {
 	try {
 		const { id } = req.params;
@@ -124,4 +145,4 @@ async function deletePin (req: Request, res: Response) {
     }
 }
 
-export { newPin, getPin, deletePin };
+export { newPin, getLatestPins, getPin, deletePin };
