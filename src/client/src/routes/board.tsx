@@ -64,7 +64,7 @@ export default function Board () {
 
     if (error) return 'Error';
 
-    if (data !== undefined && userData.name !== '') {
+    if (data !== undefined) {
         return (
             <>
                 <Navbar />
@@ -73,7 +73,7 @@ export default function Board () {
                         <header className="mb-3">
                             <span className="flex justify-between flex-row">
                                 <h1 className="text-2xl font-bold sm:text-xl">{data.name}</h1>                 
-                                {userData.name === data.pins[0].author && (
+                                {userData.name === data.author && (
                                     <button className="p-2 hover:bg-neutral-200 relative rounded-full" onClick={() => setOptions(!options)}>
                                         <BiDotsHorizontal className="text-2xl" />
                                         <ul className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
@@ -88,7 +88,7 @@ export default function Board () {
                             </span>
                             <p className="mb-3">
                                 Created by  
-                                <Link to={`/user/${data.pins[0].author}`} className="font-bold"> {data.pins[0].author}</Link>
+                                <Link to={`/user/${data.author}`} className="font-bold"> {data.author}</Link>
                             </p>
                         </header>
                         {data.pins.length > 0 && (

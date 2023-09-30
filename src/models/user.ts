@@ -28,6 +28,7 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 			name: String,
 			pins: [],
             thumbnail: String,
+            author: String,
 		}
 	]
 });
