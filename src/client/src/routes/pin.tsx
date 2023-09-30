@@ -56,7 +56,7 @@ export default function Pin() {
                     <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-3">
                         <img src={data.image.url} className="w-full rounded mb-3 sm:w-1/2" />
                         <section className="sm:w-1/2">
-                            <PinOptions userName={userData.name} pinAuthor={data.author} image={data.image.url} pinId={data._id} filled={true} />
+                            <PinOptions userName={userData.name} pinAuthor={data.author} image={data.image.url} pinId={data._id} filled={true} redirect={true} />
                             <section className="p-2">
                                 <h2 className="text-xl font-bold mb-2">{data.title}</h2>
                                 <p className="text-base mb-3">{data.content}</p>
