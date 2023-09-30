@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import router from './routes/index';
@@ -16,6 +17,8 @@ cloudinary.config({
 
 const app: Application = express();
 const port = process.env.PORT || 8080;
+
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 // middlewares
 app.use(cookieParser());
