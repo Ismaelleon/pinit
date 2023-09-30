@@ -18,9 +18,8 @@ cloudinary.config({
 const app: Application = express();
 const port = process.env.PORT || 8080;
 
-app.use(express.static(path.join(__dirname, 'client', 'dist')));
-
 // middlewares
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use('/api', router);
