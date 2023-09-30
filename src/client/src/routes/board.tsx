@@ -14,7 +14,9 @@ export default function Board () {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { isLoading, error, data } = useQuery('boardData', async () => {
+    const { isLoading, error, data } = useQuery('getBoard', getBoard);
+
+    async function getBoard () {
         try {
             const res = await fetch(`/api/board/${location.pathname.split('/')[2]}`, {
                 method: 'POST',
@@ -29,7 +31,7 @@ export default function Board () {
         } catch (err) {
             console.log(err);
         }
-    });
+    }
 
     async function getUserData () {
         try {
@@ -86,9 +88,12 @@ export default function Board () {
                                     </button>
                                 )}
                             </span>
-                            <p className="mb-3">
+                            <p>
                                 Created by  
                                 <Link to={`/user/${data.author}`} className="font-bold"> {data.author}</Link>
+                            </p>
+                            <p className="mb-3">
+                                {data.pins.length} pins
                             </p>
                         </header>
                         {data.pins.length > 0 && (
