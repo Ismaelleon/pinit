@@ -53,6 +53,7 @@ export default function Profile () {
                                         <Link to={`/board/${board._id}`}>
                                             <img src={board.thumbnail} className="rounded max-w-xs w-full" />
                                             <h2 className="text-xl sm:text-lg font-bold mt-1">{board.name}</h2>
+                                            <p>{board.pins.length} {board.pins.length > 1 ? 'pins' : 'pin'}</p>
                                         </Link>
                                     </section>
                                 )} 

@@ -12,7 +12,9 @@ export default function Pin() {
     });
 	const location = useLocation();
 
-    const { isLoading, error, data } = useQuery('userData', async () => {
+    const { isLoading, error, data } = useQuery('getPin', getPin);
+
+    async function getPin () {
         try {
             const res = await fetch(`/api/pin/${location.pathname.split("/")[2]}`, {
                 method: "POST",
@@ -27,7 +29,7 @@ export default function Pin() {
         } catch (err) {
             console.log(err);
         }
-    });
+    }
 
     async function getUserData () {
         try {
