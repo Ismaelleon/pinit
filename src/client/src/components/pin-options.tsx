@@ -8,9 +8,10 @@ interface Props {
     pinId: string;
     image: string;
     filled: Boolean;
+    redirect: Boolean;
 };
 
-export default function PinOptions ({ userName, pinAuthor, pinId, image, filled }: Props) {
+export default function PinOptions ({ userName, pinAuthor, pinId, image, filled, redirect }: Props) {
     const [options, setOptions] = useState(false);
     const navigate = useNavigate();
 
@@ -21,7 +22,9 @@ export default function PinOptions ({ userName, pinAuthor, pinId, image, filled 
             });
 
             if (res.status === 200) {
-                navigate(-1);
+                if (redirect) {
+                    navigate(-1);
+                }
             }
         } catch (err) {
             console.log(err);
@@ -42,7 +45,9 @@ export default function PinOptions ({ userName, pinAuthor, pinId, image, filled 
                     </li>
                     {userName === pinAuthor && (
                         <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500"
-                            onClick={() => deletePin(pinId)}>
+                            onClick={() => {
+                                deletePin(pinId);
+                            }}>
                             <BiTrash className="float-left ml-1 mr-2 text-lg" />Delete Pin
                         </li>
                     )}

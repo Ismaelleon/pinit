@@ -9,9 +9,10 @@ interface Props {
     image: string;
     title: string;
     author: string;
+    redirect: Boolean;
 };
 
-export default function Pin ({ userName, id, image, title, author }: Props) {
+export default function Pin ({ userName, id, image, title, author, redirect }: Props) {
     const [overlay, setOverlay] = useState(false);
 
     return (
@@ -22,7 +23,7 @@ export default function Pin ({ userName, id, image, title, author }: Props) {
                     onMouseLeave={() => setOverlay(false)}>
                     <img src={image} className="rounded z-0" />
                     <span className={`absolute pl-2 top-0 left-0 w-full h-full bg-black/50 rounded ${overlay ? 'block' : 'hidden'}`}>
-                        <PinOptions userName={userName} pinAuthor={author} image={image} pinId={id} filled={true} />
+                        <PinOptions userName={userName} pinAuthor={author} image={image} pinId={id} filled={true} redirect={redirect} />
                     </span>
                 </section>
                 <h2 className="text-lg font-bold mt-1">{title}</h2>
