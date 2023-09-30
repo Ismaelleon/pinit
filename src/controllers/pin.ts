@@ -20,6 +20,11 @@ async function newPin (req: Request, res: Response) {
 		}
 
 		const { title, content, url, boardName } = req.body;
+
+        if (title.length < 4 || boardName.length < 4 || boardName === 'new-board') {
+            return res.sendStatus(400).end();
+        }
+
 		const imageFileName = req.file?.filename;
 		const options = {
 			overwrite: true,
