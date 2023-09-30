@@ -14,7 +14,11 @@ async function newBoard(req: Request, res: Response) {
 
 		let boardName = req.body.name;
 
-		user.boards.push({ name: boardName, pins: [] });
+        if (boardName.length < 4) {
+            return res.sendStatus(400).end();     
+        }
+
+		user.boards.push({ name: boardName, pins: [], author: user.name });
 		await user.save();
 
 		return res.sendStatus(200).end();
