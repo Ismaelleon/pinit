@@ -2,13 +2,13 @@ import { useQuery } from "react-query";
 import Navbar from "../components/navbar";
 import Loading from "../components/loading";
 import Pin from "../components/pin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home () {
     const [userData, setUserData] = useState({
         name: '',
     });
-    const { isLoading, error, data } = useQuery('latestPins', async () => {
+    const { isLoading, error, data } = useQuery('latestPins', async () =>  {
         try {
             const res = await fetch(`/api/pin/latest`, {
                 method: 'POST',
@@ -16,9 +16,6 @@ export default function Home () {
 
             if (res.status === 200) {
                 let response = await res.json();
-                console.log(response);
-                getUserData();
-
                 return response;
             }
         } catch (err) {
@@ -41,11 +38,15 @@ export default function Home () {
         }
     }
 
+    useEffect(() => {
+        getUserData();
+    }, []);
+
     if (isLoading) return <Loading />;
 
     if (error) return 'Error';
 
-    if (data !== undefined && userData.name !== '') {
+    if (data !== undefined) {
         return (
             <>
                 <Navbar />
@@ -59,6 +60,7 @@ export default function Home () {
                                         title={pin.title} 
                                         author={pin.author} 
                                         image={pin.image.url} 
+                                        redirect={false}
                                         key={index} />
                                 )} 
                             </section>
