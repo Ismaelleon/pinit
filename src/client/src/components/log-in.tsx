@@ -114,7 +114,7 @@ export default function LogIn(props: Props) {
 					</Link>
 					<button
 						className="text-base mt-3 p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800"
-						onClick={submitForm}
+						onClick={() => submitForm}
 					>
 						Log In
 					</button>

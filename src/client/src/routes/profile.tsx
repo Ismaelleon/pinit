@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../components/navbar';
 import { BiExit, BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
@@ -15,7 +14,6 @@ export default function Profile () {
 
             if (res.status === 200) {
                 let response = await res.json();
-                console.log(response);
                 return response;
             }
         } catch (err) {
