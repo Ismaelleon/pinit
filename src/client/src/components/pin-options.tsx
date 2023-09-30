@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BiDotsHorizontal, BiDownload, BiTrash } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface Props {
     userName: string;
@@ -14,6 +15,8 @@ interface Props {
 export default function PinOptions ({ userName, pinAuthor, pinId, image, filled, redirect }: Props) {
     const [options, setOptions] = useState(false);
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
+    const location = useLocation();
 
     async function deletePin (id: string) {
         try {
@@ -24,6 +27,13 @@ export default function PinOptions ({ userName, pinAuthor, pinId, image, filled,
             if (res.status === 200) {
                 if (redirect) {
                     navigate(-1);
+                } else {
+                    let route = location.pathname.split('/')[1];
+                    if (route === 'board') {
+                        queryClient.invalidateQueries('getBoard');
+                    } else if (route === 'home') {
+                        queryClient.invalidateQueries('getLatestPins');
+                    }
                 }
             }
         } catch (err) {

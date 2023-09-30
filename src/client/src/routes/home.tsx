@@ -8,7 +8,9 @@ export default function Home () {
     const [userData, setUserData] = useState({
         name: '',
     });
-    const { isLoading, error, data } = useQuery('latestPins', async () =>  {
+    const { isLoading, error, data } = useQuery('getLatestPins', getLatestPins);
+
+    async function getLatestPins () {
         try {
             const res = await fetch(`/api/pin/latest`, {
                 method: 'POST',
@@ -21,7 +23,7 @@ export default function Home () {
         } catch (err) {
             console.log(err);
         }
-    });
+    }
 
     async function getUserData () {
         try {
