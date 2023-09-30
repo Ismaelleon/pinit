@@ -1,14 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { BiHome, BiPlus, BiSolidUserCircle } from "react-icons/bi";
-import { useEffect, useState } from "react";
 
 export default function Navbar() {
 	const location = useLocation();
-	const [mobile, setMobile] = useState(true);
-
-	useEffect(() => {
-		window.innerWidth <= 639 ? setMobile(true) : setMobile(false);
-	}, []);
 
 	return (
 		<nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50">

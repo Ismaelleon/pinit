@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../components/navbar';
 import { BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';

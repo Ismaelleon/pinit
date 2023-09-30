@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from "react";
+import { LegacyRef, createRef, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { BiPlus } from "react-icons/bi";
@@ -7,12 +7,12 @@ export default function Create() {
 	const [title, setTitle] = useState(""),
 		[content, setContent] = useState(""),
 		[url, setUrl] = useState(""),
-		[image, setImage] = useState(null),
+		[image, setImage] = useState<any>(null),
 		[board, setBoard] = useState("new-board"),
 		[boards, setBoards] = useState([]),
 		[newBoard, setNewBoard] = useState("");
 
-	const select = createRef();
+	const select: LegacyRef<HTMLSelectElement> = createRef();
 
 	const navigate = useNavigate();
 
@@ -45,6 +45,8 @@ export default function Create() {
 			if (res.status === 200) {
 				getUser();
 				setBoard(newBoard);
+                //@ts-ignore
+                select.current.value = newBoard;
 			}
 		});
 	}
@@ -67,8 +69,6 @@ export default function Create() {
 			if (res.status === 200) {
 				let { id } = await res.json();
 				navigate(`/pin/${id}`);
-			} else {
-				navigate("/home");
 			}
 		});
 	}
@@ -90,6 +90,7 @@ export default function Create() {
 								accept="image/*"
 								multiple={false}
 								onInput={(e) =>
+                                    // @ts-ignore
 									setImage(e.currentTarget.files[0])
 								}
 							/>
@@ -155,7 +156,7 @@ export default function Create() {
 								<option value="new-board">
 									Create new Board
 								</option>
-								{boards.map((board, index) => (
+								{boards.map((board: {name: string}, index) => (
 									<option value={board.name} key={index}>
 										{board.name}
 									</option>
@@ -179,14 +180,14 @@ export default function Create() {
 								/>
 								<button
 									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm"
-									onClick={createBoard}
+									onClick={() => createBoard}
 								>
 									Create
 								</button>
 							</div>
 							<button
 								className="w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm"
-								onClick={submitForm}
+								onClick={() => submitForm}
 							>
 								Create new Pin
 							</button>

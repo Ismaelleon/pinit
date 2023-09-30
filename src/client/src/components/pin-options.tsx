@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BiDotsHorizontal, BiDownload, BiTrash } from 'react-icons/bi';
 import { useQueryClient } from 'react-query';
 import { useLocation, useNavigate } from 'react-router-dom';

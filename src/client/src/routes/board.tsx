@@ -99,7 +99,7 @@ export default function Board () {
                         {data.pins.length > 0 && (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
                                 {data.pins.map((pin: any, index: number) =>
-                                    <Pin userName={userData.name} id={pin._id} title={pin.title} author={pin.author} image={pin.image.url} key={index} />
+                                    <Pin userName={userData.name} id={pin._id} title={pin.title} author={pin.author} image={pin.image.url} key={index} redirect={false} />
                                 )} 
                             </section>
                         )}
