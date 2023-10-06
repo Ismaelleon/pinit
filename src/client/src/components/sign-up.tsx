@@ -159,7 +159,7 @@ export default function SignUp(props: Props) {
 					/>
 					<button
 						className={`text-base mt-3 p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800`}
-						onClick={() => submitForm()}
+						onClick={submitForm}
 					>
 						Sign Up
 					</button>

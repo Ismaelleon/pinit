@@ -180,14 +180,14 @@ export default function Create() {
 								/>
 								<button
 									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm"
-									onClick={() => createBoard()}
+									onClick={createBoard}
 								>
 									Create
 								</button>
 							</div>
 							<button
 								className="w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm"
-								onClick={() => submitForm()}
+								onClick={submitForm}
 							>
 								Create new Pin
 							</button>
