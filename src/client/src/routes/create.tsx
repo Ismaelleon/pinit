@@ -7,7 +7,7 @@ export default function Create() {
 	const [title, setTitle] = useState({ value: '', error: false }),
 		[content, setContent] = useState(""),
 		[url, setUrl] = useState(""),
-		[image, setImage] = useState<any>(null),
+		[image, setImage] = useState<any>({ value: null, error: false }),
 		[board, setBoard] = useState("new-board"),
 		[boards, setBoards] = useState([]),
 		[newBoard, setNewBoard] = useState({ value: '', error: false });
@@ -60,7 +60,7 @@ export default function Create() {
 		body.append("title", title.value);
 		body.append("content", content);
 		body.append("url", url);
-		body.append("image", image);
+		body.append("image", image.value);
 		body.append("boardName", board);
 
 		fetch("/api/pin/new", {
@@ -71,7 +71,13 @@ export default function Create() {
 				let { id } = await res.json();
 				navigate(`/pin/${id}`);
 			} else {
-                setTitle({ value: title.value, error: true });
+                if (title.value.length < 4) {
+                    setTitle({ value: title.value, error: true });
+                }
+
+                if (image.value === null) {
+                    setImage({ value: null, error: true });
+                }
             }
 		});
 	}
@@ -94,14 +100,14 @@ export default function Create() {
 								multiple={false}
 								onInput={(e) =>
                                     // @ts-ignore
-									setImage(e.currentTarget.files[0])
+									setImage({ value: e.currentTarget.files[0], error: false })
 								}
 							/>
-                            <img className="w-full rounded" src={image === null ? '' : URL.createObjectURL(image)}/>
-                            <header className="flex flex-row justify-end p-2" style={ image === null ? { display: 'none' } : { display: 'flex' } }>
+                            <img className="w-full rounded" src={image.value === null ? '' : URL.createObjectURL(image.value)}/>
+                            <header className="flex flex-row justify-end p-2" style={ image.value === null ? { display: 'none' } : { display: 'flex' } }>
                                 <button className="p-2 rounded-full bg-neutral-200" onClick={e => {
                                     e.preventDefault();
-                                    setImage(null);
+                                    setImage({ value: null, error: false });
                                 }}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -118,15 +124,16 @@ export default function Create() {
                                 </button>
                             </header>
 							<label
-								className="w-full p-3 flex justify-center items-center flex-col border border-dashed border-neutral-400 rounded mb-3 cursor-pointer h-full"
+								className={`w-full p-3 flex justify-center items-center flex-col border border-dashed rounded mb-3 cursor-pointer h-full ${image.error ? 'border-red-400' : 'border-neutral-400'}`}
 								htmlFor="image"
-                                style={ image === null ? { display: 'flex' } : { display: 'none' } }
+                                style={ image.value === null ? { display: 'flex' } : { display: 'none' } }
 							>
 								<BiPlus size={32} />
 								<span className="text-base sm:text-sm">
 									Insert Image
 								</span>
 							</label>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${image.error ? 'block' : 'hidden'}`}>We need an image to upload</span>
 						</section>
 						<section className="sm:w-1/2">
 							<input
