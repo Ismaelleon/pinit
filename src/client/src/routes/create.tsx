@@ -4,17 +4,16 @@ import Navbar from "../components/navbar";
 import { BiPlus } from "react-icons/bi";
 
 export default function Create() {
-	const [title, setTitle] = useState(""),
+	const [title, setTitle] = useState({ value: '', error: false }),
 		[content, setContent] = useState(""),
 		[url, setUrl] = useState(""),
 		[image, setImage] = useState<any>(null),
 		[board, setBoard] = useState("new-board"),
 		[boards, setBoards] = useState([]),
-		[newBoard, setNewBoard] = useState("");
-
-	const select: LegacyRef<HTMLSelectElement> = createRef();
+		[newBoard, setNewBoard] = useState({ value: '', error: false });
 
 	const navigate = useNavigate();
+    const newBoardInput: LegacyRef<HTMLInputElement> = createRef();
 
 	function getUser() {
 		fetch("/api/user/", {
@@ -36,7 +35,7 @@ export default function Create() {
 		fetch("/api/board/new", {
 			method: "POST",
 			body: JSON.stringify({
-				name: newBoard,
+				name: newBoard.value,
 			}),
 			headers: {
 				"Content-Type": "application/json",
@@ -44,10 +43,12 @@ export default function Create() {
 		}).then((res) => {
 			if (res.status === 200) {
 				getUser();
-				setBoard(newBoard);
-                //@ts-ignore
-                select.current.value = newBoard;
-			}
+                setBoard(newBoard.value);
+                setNewBoard({ value: '', error: false });
+                newBoardInput.current.value = '';
+			} else {
+                setNewBoard({ value: newBoard.value, error: true });
+            }
 		});
 	}
 
@@ -56,7 +57,7 @@ export default function Create() {
 
 		const body = new FormData();
 
-		body.append("title", title);
+		body.append("title", title.value);
 		body.append("content", content);
 		body.append("url", url);
 		body.append("image", image);
@@ -69,7 +70,9 @@ export default function Create() {
 			if (res.status === 200) {
 				let { id } = await res.json();
 				navigate(`/pin/${id}`);
-			}
+			} else {
+                setTitle({ value: title.value, error: true });
+            }
 		});
 	}
 
@@ -129,13 +132,14 @@ export default function Create() {
 							<input
 								type="text"
 								placeholder="Add a Title"
-								className="border-neutral-400 border text-base rounded w-full p-2 mb-3 sm:text-sm"
-								onInput={(e) => setTitle(e.currentTarget.value)}
+								className={`border text-base rounded w-full p-2 sm:text-sm ${title.error ? 'border-red-400' : 'border-neutral-400'}`}
+								onInput={(e) => setTitle({ value: e.currentTarget.value, error: false })}
 							/>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${title.error ? 'block' : 'hidden'}`}>Pin title is too short (4 characters min)</span>
 							<textarea
 								placeholder="Tell everyone about your Pin."
 								rows={4}
-								className="border-neutral-400 border text-base rounded w-full p-2 mb-3 resize-none sm:text-sm"
+								className="border-neutral-400 border text-base rounded w-full p-2 mt-3 mb-3 resize-none sm:text-sm"
 								onInput={(e) =>
 									setContent(e.currentTarget.value)
 								}
@@ -151,7 +155,7 @@ export default function Create() {
 								onChange={(e) =>
 									setBoard(e.currentTarget.value)
 								}
-								ref={select}
+                                value={board}
 							>
 								<option value="new-board">
 									Create new Board
@@ -170,14 +174,18 @@ export default function Create() {
 										: { display: "none" }
 								}
 							>
-								<input
-									type="text"
-									placeholder="Board name"
-									className="border-neutral-400 border text-base rounded w-75 p-2 bg-white sm:text-sm"
-									onInput={(e) =>
-										setNewBoard(e.currentTarget.value)
-									}
-								/>
+                                <div className="flex flex-col">
+                                    <input
+                                        type="text"
+                                        placeholder="Board name"
+                                        className={`border text-base rounded w-75 p-2 bg-white sm:text-sm ${newBoard.error ? 'border-red-400' : 'border-neutral-400'}`}
+                                        onInput={(e) =>
+                                            setNewBoard({ value: e.currentTarget.value, error: false })
+                                        }
+                                        ref={newBoardInput}
+                                    />
+                                    <span className={`text-sm mt-1 block mr-auto text-red-400 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short <br /> (4 characters min)</span>
+                                </div>
 								<button
 									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm"
 									onClick={createBoard}

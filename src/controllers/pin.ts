@@ -13,6 +13,10 @@ async function newPin (req: Request, res: Response) {
 			process.env.JWT_SECRET!
 		);
 
+        if (req.body.title.length < 4) {
+            return res.sendStatus(400).end();
+        }
+
 		let user = await User.findOne({ name });
 
 		if (user === null) {
