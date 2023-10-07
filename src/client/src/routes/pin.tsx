@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import Loading from "../components/loading";
 import PinOptions from "../components/pin-options";
-import { BiSolidUserCircle } from "react-icons/bi";
+import { BiLink, BiSolidUserCircle } from "react-icons/bi";
 
 export default function Pin() {
     const [userData, setUserData] = useState({
@@ -62,6 +62,12 @@ export default function Pin() {
                             <section className="p-2">
                                 <h2 className="text-xl font-bold mb-2">{data.title}</h2>
                                 <p className="text-base mb-3">{data.content}</p>
+                                {data.url && (
+                                    <a href={data.url} target="_blank" className="text-sm font-bold flex flex-row items-center -mt-3 mb-3 hover:underline">
+                                        Visit URL 
+                                        <BiLink className="text-base ml-1" />
+                                    </a>
+                                )}
                                 <Link to={`/user/${data.author}`}  className="text-base font-bold flex flex-row items-center gap-3 mb-2">
                                     <BiSolidUserCircle size={24} /> {data.author}
                                 </Link>
