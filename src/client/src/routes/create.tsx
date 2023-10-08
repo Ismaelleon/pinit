@@ -1,4 +1,4 @@
-import { LegacyRef, createRef, useEffect, useState } from "react";
+import { LegacyRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { BiPlus } from "react-icons/bi";
@@ -15,6 +15,7 @@ export default function Create() {
 	const select: LegacyRef<HTMLSelectElement> = createRef();
 
 	const navigate = useNavigate();
+  const newBoardInput: LegacyRef<HTMLInputElement> = useRef(null);
 
 	function getUser() {
 		fetch("/api/user/", {
@@ -30,7 +31,7 @@ export default function Create() {
 
 	useEffect(getUser, []);
 
-	function createBoard(event: Event) {
+	function createBoard(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 
 		fetch("/api/board/new", {
@@ -44,14 +45,18 @@ export default function Create() {
 		}).then((res) => {
 			if (res.status === 200) {
 				getUser();
-				setBoard(newBoard);
-                //@ts-ignore
-                select.current.value = newBoard;
-			}
+                setBoard(newBoard.value);
+                setNewBoard({ value: '', error: false });
+
+                // @ts-ignore
+                newBoardInput.current.value = '';
+			} else {
+                setNewBoard({ value: newBoard.value, error: true });
+            }
 		});
 	}
 
-	function submitForm(event: Event) {
+	function submitForm(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 
 		const body = new FormData();

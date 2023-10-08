@@ -13,7 +13,7 @@ export default function LogIn(props: Props) {
 
 	const navigate = useNavigate();
 
-	function submitForm(event: Event) {
+	function submitForm(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		fetch("/api/log-in", {
 			method: "post",
