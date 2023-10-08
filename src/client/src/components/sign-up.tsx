@@ -15,7 +15,7 @@ export default function SignUp(props: Props) {
 
 	const navigate = useNavigate();
 
-	function submitForm(event: Event) {
+	function submitForm(event: React.MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 
         if (name.valid && email.valid && password.valid && birthday.valid) {
