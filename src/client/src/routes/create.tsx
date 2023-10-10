@@ -144,7 +144,7 @@ export default function Create() {
 								className={`border text-base rounded w-full p-2 sm:text-sm ${title.error ? 'border-red-400' : 'border-neutral-400'}`}
 								onInput={(e) => setTitle({ value: e.currentTarget.value, error: false })}
 							/>
-                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${title.error ? 'block' : 'hidden'}`}>Pin title is too short (4 characters min)</span>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${title.error ? 'block' : 'hidden'}`}>Pin title is too short (minimum 4 characters)</span>
 							<textarea
 								placeholder="Tell everyone about your Pin."
 								rows={4}
