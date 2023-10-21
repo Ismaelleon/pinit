@@ -3,6 +3,7 @@ import { BiExit, BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import Loading from '../components/loading';
+import { MdVerified } from 'react-icons/md';
 
 export default function Profile () {
     const navigate = useNavigate();
@@ -33,16 +34,17 @@ export default function Profile () {
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <BiSolidUserCircle size={64} />
-                            <span className="flex flex-row items-center">
-                                <h1 className="text-2xl font-bold mb-3 sm:text-xl">{data.name!}</h1>                 
-                                <button className="p-2 hover:bg-neutral-200 rounded-full ml-2 -translate-y-1/4" 
+                            <section className="flex flex-row items-center">
+                                <h1 className="text-2xl font-bold sm:text-xl">{data.name!}</h1>                 
+                                {data.verified && <MdVerified className="ml-2 text-lg text-pink-600" />}
+                                <button className="p-2 hover:bg-neutral-200 rounded-full ml-2" 
                                         onClick={() => {
                                             document.cookie = 'token=;Expires=Thu, 01 Jan 1970 00:00:00 UTC;'
                                             navigate('/');
                                         }}>
                                     <BiExit className="text-xl text-red-500" />
                                 </button>
-                            </span>
+                            </section>
                         </header>
                         {data.boards.length > 0 && (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">

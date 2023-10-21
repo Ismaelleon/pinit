@@ -30,7 +30,11 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
             thumbnail: String,
             author: String,
 		}
-	]
+	],
+    verified: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 userSchema.pre('save', async function (next) {

@@ -13,7 +13,7 @@ async function getUser(req: Request, res: Response) {
             name = payload;
         }
 
-        const user = await User.findOne({ name }).select("name boards");
+        const user = await User.findOne({ name }).select("name boards verified");
 
         if (user === null) {
             return res.sendStatus(401).end();
