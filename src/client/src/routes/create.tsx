@@ -161,9 +161,10 @@ export default function Create() {
 							/>
 							<select
 								className="border-neutral-400 border text-base rounded w-full p-2 mb-3 bg-white sm:text-sm"
-								onChange={(e) =>
+								onChange={(e) => {
 									setBoard(e.currentTarget.value)
-								}
+                                    setNewBoard({ value: newBoard.value, error: false });
+								}}
                                 value={board}
 							>
 								<option value="new-board">
@@ -202,9 +203,9 @@ export default function Create() {
 								</button>
 
 							</div>
-                            <span className={`text-sm mt-1 block mr-auto text-red-400 mb-3 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short (4 characters min), or board already exists.</span>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short (4 characters min), or board already exists.</span>
 							<button
-								className="w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm"
+								className={`w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm ${board === 'new-board' ? 'mt-3' : 'mt-none' }`}
 								onClick={submitForm}
 							>
 								Create new Pin
