@@ -176,7 +176,7 @@ export default function Create() {
 								))}
 							</select>
 							<div
-								className="flex flex-row items-stretch mb-3 gap-3 w-full"
+								className="flex flex-row items-stretch gap-3 w-full"
 								style={
 									board === "new-board"
 										? { display: "flex" }
@@ -193,15 +193,16 @@ export default function Create() {
                                         }
                                         ref={newBoardInput}
                                     />
-                                    <span className={`text-sm mt-1 block mr-auto text-red-400 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short <br /> (4 characters min)</span>
                                 </div>
 								<button
-									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm"
+									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm self-start p-2 border border-red-600 hover:border-red-800"
 									onClick={createBoard}
 								>
 									Create
 								</button>
+
 							</div>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 mb-3 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short (4 characters min), or board already exists.</span>
 							<button
 								className="w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm"
 								onClick={submitForm}
