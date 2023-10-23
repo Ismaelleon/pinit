@@ -36,7 +36,7 @@ export default function Profile () {
                             <BiSolidUserCircle size={64} />
                             <section className="flex flex-row items-center mb-3">
                                 <h1 className="text-2xl font-bold sm:text-xl">{data.name!}</h1>                 
-                                {data.verified && <MdVerified className="ml-2 text-lg text-pink-600" />}
+                                {data.verified && <MdVerified className="ml-2 text-lg text-red-600" />}
                                 <button className="p-2 hover:bg-neutral-200 rounded-full ml-2" 
                                         onClick={() => {
                                             document.cookie = 'token=;Expires=Thu, 01 Jan 1970 00:00:00 UTC;'
