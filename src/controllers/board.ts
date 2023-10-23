@@ -18,6 +18,12 @@ async function newBoard(req: Request, res: Response) {
             return res.sendStatus(400).end();     
         }
 
+        for (let board of user.boards) {
+            if (board.name === boardName) {
+                return res.sendStatus(400).end();
+            }
+        }
+
 		user.boards.push({ name: boardName, pins: [], author: user.name });
 		await user.save();
 

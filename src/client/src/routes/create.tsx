@@ -154,10 +154,11 @@ export default function Create() {
 							/>
 							<select
 								className="border-neutral-400 border text-base rounded w-full p-2 mb-3 bg-white sm:text-sm"
-								onChange={(e) =>
-									setBoard(e.currentTarget.value)
-								}
-								ref={select}
+								onChange={(e) => {
+									setBoard(e.currentTarget.value);
+                  setNewBoard({ value: newBoard.value, error: false });
+								}}
+                value={board}
 							>
 								<option value="new-board">
 									Create new Board
@@ -169,30 +170,35 @@ export default function Create() {
 								))}
 							</select>
 							<div
-								className="flex flex-row items-stretch mb-3 gap-3 w-full"
+								className="flex flex-row items-stretch gap-3 w-full"
 								style={
 									board === "new-board"
 										? { display: "flex" }
 										: { display: "none" }
 								}
 							>
-								<input
-									type="text"
-									placeholder="Board name"
-									className="border-neutral-400 border text-base rounded w-75 p-2 bg-white sm:text-sm"
-									onInput={(e) =>
-										setNewBoard(e.currentTarget.value)
-									}
-								/>
+                <div className="flex flex-col">
+                    <input
+                        type="text"
+                        placeholder="Board name"
+                        className={`border text-base rounded w-75 p-2 bg-white sm:text-sm ${newBoard.error ? 'border-red-400' : 'border-neutral-400'}`}
+                        onInput={(e) =>
+                            setNewBoard({ value: e.currentTarget.value, error: false })
+                        }
+                        ref={newBoardInput}
+                    />
+                </div>
 								<button
-									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm"
+									className="bg-red-600 hover:bg-red-800 w-full text-base text-white font-semibold rounded sm:text-sm self-start p-2 border border-red-600 hover:border-red-800"
 									onClick={createBoard}
 								>
 									Create
 								</button>
+
 							</div>
+                            <span className={`text-sm mt-1 block mr-auto text-red-400 ${newBoard.error ? 'block' : 'hidden'}`}>Board name is too short (4 characters min), or board already exists.</span>
 							<button
-								className="w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm"
+								className={`w-full text-base p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800 sm:text-sm ${board === 'new-board' ? 'mt-3' : 'mt-none' }`}
 								onClick={submitForm}
 							>
 								Create new Pin
