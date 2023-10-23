@@ -35,9 +35,9 @@ export default function User () {
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <BiSolidUserCircle size={64} />
-                            <section className="flex flex-row items-center">
+                            <section className="flex flex-row items-center mb-3">
                                 <h1 className="text-2xl font-bold sm:text-xl">{data.name!}</h1>                 
-                                {data.verified && <MdVerified className="ml-2 text-lg text-pink-600" />}
+                                {data.verified && <MdVerified className="ml-2 text-lg text-red-600" />}
                             </section>
                         </header>
                         {data.boards.length > 0 && (
