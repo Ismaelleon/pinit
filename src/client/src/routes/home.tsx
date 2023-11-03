@@ -54,7 +54,7 @@ export default function Home () {
                 <Navbar />
                 <main className="flex justify-center mt-[64px] p-4">
                     <section className="flex flex-col max-w-3xl w-full">
-                        {data.length > 0 && (
+                        {data.length > 0 ? (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
                                 {data.map((pin: any, index: number) =>
                                     <Pin userName={userData.name}
@@ -66,7 +66,8 @@ export default function Home () {
                                         key={index} />
                                 )} 
                             </section>
-                        )}
+                        )
+                        : <p className="text-center text-lg font-bold">No pins yet!</p>}
                     </section>
                 </main>
             </>
