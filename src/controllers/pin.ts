@@ -5,6 +5,7 @@ import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
 import User from "../models/user";
 import Pin from '../models/pin';
+import Jimp from "jimp";
 
 async function newPin (req: Request, res: Response) {
 	try {
@@ -26,6 +27,12 @@ async function newPin (req: Request, res: Response) {
         }
 
 		const imageFileName = req.file?.filename;
+        
+        // Resize and compress image
+        let image = await Jimp.read(path.join(__dirname, `../public/images/${imageFileName}`));
+        let imageWidth = image.getWidth();
+        await image.resize(imageWidth / 2, Jimp.AUTO).quality(70).writeAsync(path.join(__dirname, `../public/images/${imageFileName}`));
+
 		const options = {
 			overwrite: true,
 			public_id: imageFileName,
