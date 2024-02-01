@@ -46,7 +46,7 @@ export default function Profile () {
                                 </button>
                             </section>
                         </header>
-                        {data.boards.length > 0 && (
+                        {data.boards.length > 0 ? (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
                                 {data.boards.map((board: any, index: number) =>
                                     <section key={index}> 
@@ -58,7 +58,7 @@ export default function Profile () {
                                     </section>
                                 )} 
                             </section>
-                        )}
+                        ) : <p className="text-center text-lg font-bold">No boards yet!</p>}
                     </section>
                 </main>
             </>
