@@ -3,7 +3,7 @@ import { BiSolidUserCircle } from 'react-icons/bi';
 import { MdVerified } from 'react-icons/md';
 import { useQuery } from 'react-query';
 import { Link, useLocation } from 'react-router-dom';
-import Loading from '../components/loading';
+import ProfileLoading from '../components/profile-loading';
 
 export default function User () {
     const location = useLocation();
@@ -23,7 +23,7 @@ export default function User () {
         }
     });
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <ProfileLoading />;
 
     if (error) return 'Error';
 

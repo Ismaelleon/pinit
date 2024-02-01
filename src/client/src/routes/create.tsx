@@ -2,6 +2,8 @@ import { LegacyRef, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { BiPlus } from "react-icons/bi";
+import LoadingBar from 'react-top-loading-bar';
+
 
 export default function Create() {
 	const [title, setTitle] = useState({ value: '', error: false }),
@@ -11,6 +13,8 @@ export default function Create() {
 		[board, setBoard] = useState("new-board"),
 		[boards, setBoards] = useState([]),
 		[newBoard, setNewBoard] = useState({ value: '', error: false });
+
+	const bar = useRef(null);
 
 	const navigate = useNavigate();
     const newBoardInput: LegacyRef<HTMLInputElement> = useRef(null);
@@ -86,6 +90,7 @@ export default function Create() {
 
 	return (
 		<div>
+            <LoadingBar color="#dc2626" ref={bar} />
 			<Navbar />
 			<main className="flex justify-center mt-[64px] p-4">
 				<section className="flex flex-col max-w-3xl">

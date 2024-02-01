@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import Navbar from "../components/navbar";
-import Loading from "../components/loading";
+import HomeLoading from "../components/home-loading";
 import Pin from "../components/pin";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home () {
     const [userData, setUserData] = useState({
@@ -44,7 +44,7 @@ export default function Home () {
         getUserData();
     }, []);
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <HomeLoading />;
 
     if (error) return 'Error';
 

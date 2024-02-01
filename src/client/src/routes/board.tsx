@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Navbar from '../components/navbar';
 import { useQuery } from 'react-query';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import Loading from '../components/loading';
 import Pin from '../components/pin';
 import { BiDotsHorizontal, BiTrash } from 'react-icons/bi';
 
@@ -62,7 +61,7 @@ export default function Board () {
         }
     }
 
-    if (isLoading) return <Loading />;
+    //if (isLoading) return <Loading />;
 
     if (error) return 'Error';
 

@@ -2,8 +2,8 @@ import { useState } from "react";
 import Navbar from "../components/navbar";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-import Loading from "../components/loading";
 import PinOptions from "../components/pin-options";
+import PinLoading from '../components/pin-loading';
 import { BiSolidUserCircle } from "react-icons/bi";
 
 export default function Pin() {
@@ -46,7 +46,7 @@ export default function Pin() {
         }
     }
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <PinLoading />;
 
     if (error) return 'Error';
 
