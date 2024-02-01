@@ -9,6 +9,7 @@ interface Props {
     image: string;
     title: string;
     author: string;
+    verified: string;
     redirect: Boolean;
 };
 
@@ -31,6 +32,7 @@ export default function Pin ({ userName, id, image, title, author, redirect }: P
             <Link to={`/user/${author}`} className="flex flex-row items-center mt-2">
                 <BiSolidUserCircle className="text-2xl mr-2" />
                 <p>{author}</p>
+                {}
             </Link>
         </section>
     );

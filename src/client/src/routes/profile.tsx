@@ -2,7 +2,7 @@ import Navbar from '../components/navbar';
 import { BiExit, BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
-import Loading from '../components/loading';
+import ProfileLoading from '../components/profile-loading';
 import { MdVerified } from 'react-icons/md';
 
 export default function Profile () {
@@ -22,7 +22,7 @@ export default function Profile () {
         }
     });
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <ProfileLoading />;
 
     if (error) return 'Error';
 
