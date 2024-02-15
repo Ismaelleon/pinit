@@ -22,7 +22,7 @@ export default function Pin ({ userName, id, image, title, author, redirect }: P
                 <section className="relative"
                     onMouseEnter={() => setOverlay(true)} 
                     onMouseLeave={() => setOverlay(false)}>
-                    <img src={image} className="rounded z-0" />
+                    <img src={image} className="rounded z-0 w-full" />
                     <span className={`absolute pl-2 top-0 left-0 w-full h-full bg-black/50 rounded ${overlay ? 'block' : 'hidden'}`}>
                         <PinOptions userName={userName} pinAuthor={author} image={image} pinId={id} filled={true} redirect={redirect} />
                     </span>
