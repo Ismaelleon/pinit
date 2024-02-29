@@ -13,6 +13,15 @@ const pinSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    comments: {
+        type: [{
+            content: String,
+            author: String,
+            date: String,
+            likes: Number,
+        }],
+        default: [],
+    },
 });
 
 const pin = mongoose.model('pin', pinSchema, 'pins');
