@@ -45,16 +45,16 @@ export default function PinOptions ({ userName, pinAuthor, pinId, image, filled,
         <header className="py-2" onClick={e => {
                 e.preventDefault();
             }}>
-            <button className={`p-2 hover:bg-neutral-200 rounded-full ${filled && 'bg-neutral-200'} ${options ? 'bg-neutral-200' : ''}`}
+            <button className={`p-2 hover:bg-neutral-300 rounded-full ${filled && 'bg-neutral-200'} ${options ? 'bg-neutral-200' : ''}`}
                     onClick={() => setOptions(!options)}>
                 <BiDotsHorizontal className="text-2xl" />
                 <ul className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2"
                     style={options ? { display: 'flex' } : { display: 'none' }}>
-                    <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm" onClick={() => window.open(image)}>
+                    <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-300 rounded-sm" onClick={() => window.open(image)}>
                         <BiDownload className="float-left ml-1 mr-2 text-lg" /> Download Image
                     </li>
                     {userName === pinAuthor && (
-                        <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500"
+                        <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-300 rounded-sm text-red-500"
                             onClick={() => {
                                 deletePin(pinId);
                             }}>

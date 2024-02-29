@@ -70,7 +70,7 @@ export default function Pin() {
                                         <BiLink size={24} />
                                     </a>}
                                 <p className="text-base mb-3">{data.content}</p>
-                                <Link to={`/user/${data.author}`}  className="text-base font-bold flex flex-row items-center gap-3 mb-2">
+                                <Link to={`/user/${data.author}`}  className="text-base font-bold flex flex-row items-center gap-3 mb-2 hover:underline">
                                     <BiSolidUserCircle size={24} /> {data.author}
                                 </Link>
                             </section>

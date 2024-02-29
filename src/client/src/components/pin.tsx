@@ -27,9 +27,9 @@ export default function Pin ({ userName, id, image, title, author, redirect }: P
                         <PinOptions userName={userName} pinAuthor={author} image={image} pinId={id} filled={true} redirect={redirect} />
                     </span>
                 </section>
-                <h2 className="text-lg font-bold mt-1">{title}</h2>
+                <h2 className="text-lg font-bold mt-1 hover:underline">{title}</h2>
             </Link>
-            <Link to={`/user/${author}`} className="flex flex-row items-center mt-2">
+            <Link to={`/user/${author}`} className="flex flex-row items-center mt-2 font-bold hover:underline">
                 <BiSolidUserCircle className="text-2xl mr-2" />
                 <p>{author}</p>
                 {}
