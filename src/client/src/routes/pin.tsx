@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
 import PinOptions from "../components/pin-options";
 import PinLoading from '../components/pin-loading';
-import { BiSolidUserCircle } from "react-icons/bi";
+import { BiLink, BiSolidUserCircle } from "react-icons/bi";
 
 export default function Pin() {
     const [userData, setUserData] = useState({
@@ -55,12 +55,20 @@ export default function Pin() {
             <>
                 <Navbar />
                 <main className="flex justify-center mt-[64px] p-4">
-                    <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-3">
+                    <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-2">
                         <img src={data.image.url} className="w-full rounded mb-3 sm:w-1/2" />
                         <section className="sm:w-1/2">
                             <PinOptions userName={userData.name} pinAuthor={data.author} image={data.image.url} pinId={data._id} filled={true} redirect={true} />
                             <section className="p-2">
-                                <h2 className="text-xl font-bold mb-2">{data.title}</h2>
+                                {data.url === '' ? 
+                                    <h2 className="text-xl font-bold mb-2 hover:underline">
+                                        {data.title}
+                                    </h2>
+                                :
+                                    <a className="flex flex-row gap-2 items-center text-xl font-bold mb-2 hover:underline" href={data.url} target="_blank">
+                                        {data.title}
+                                        <BiLink size={24} />
+                                    </a>}
                                 <p className="text-base mb-3">{data.content}</p>
                                 <Link to={`/user/${data.author}`}  className="text-base font-bold flex flex-row items-center gap-3 mb-2">
                                     <BiSolidUserCircle size={24} /> {data.author}
