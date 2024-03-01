@@ -19,6 +19,7 @@ const pinSchema = new mongoose.Schema({
             author: String,
             date: String,
             likes: Number,
+            _id: mongoose.Schema.Types.ObjectId,
         }],
         default: [],
     },

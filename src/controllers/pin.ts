@@ -184,6 +184,7 @@ async function commentPin (req: Request, res: Response) {
             author,
             date,
             likes: 0,
+            _id: new mongoose.Types.ObjectId(),
         });
 
         await pin.save();
@@ -194,4 +195,36 @@ async function commentPin (req: Request, res: Response) {
     }
 }
 
-export { newPin, getLatestPins, getPin, deletePin, commentPin };
+async function uncommentPin (req: Request, res: Response) {
+    try {
+		let name = jwt.verify(
+			req.cookies.token,
+			process.env.JWT_SECRET!
+		);
+
+		let user = await User.findOne({ name });
+
+		if (user === null) {
+			return res.sendStatus(401).end();
+		}
+
+        let { pinId, _id } = req.body;
+        const pin = await Pin.findOne({ _id: new mongoose.Types.ObjectId(pinId) });
+        
+        if (pin === null) {
+            return res.sendStatus(404).end();
+        }
+
+        pin.comments = pin.comments.filter(comment => {
+            return comment._id!.toString() !== _id
+        });
+
+        await pin.save();
+
+        return res.json(pin).end();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export { newPin, getLatestPins, getPin, deletePin, commentPin, uncommentPin };

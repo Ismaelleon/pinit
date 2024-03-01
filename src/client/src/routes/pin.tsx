@@ -106,7 +106,7 @@ export default function Pin() {
                                     <BiSolidUserCircle size={32} /> {data.author}
                                 </Link>
                                 <h3 className="text-lg font-bold mt-6 mb-2">Comments</h3>
-                                <section className="overflow-scroll max-h-28">
+                                <section className="overflow-scroll max-h-36">
                                     {data.comments.length === 0 &&
                                         <p>
                                             There are not comments yet. Add one 
@@ -114,18 +114,18 @@ export default function Pin() {
                                         </p>
                                     }
                                     {data.comments.map((comment, index) => 
-                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} key={index} />                                        
+                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} id={comment._id} key={index} />                                        
                                     )}
                                 </section>
                                 <section className="flex flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white">
                                     <BiSolidUserCircle size={48} />
                                     <input
                                         type="text"
-                                        placeholder="Add a Title"
+                                        placeholder="Add a comment"
                                         className="border border-neutral-400 text-base rounded w-full p-2 sm:text-sm w-full"
                                         onChange={e => setCommentContent(e.target.value)}
                                     />
-                                    <button className="p-2 bg-red-600 rounded-3xl hover:bg-red-800" onClick={() => commentMutation.mutate()}>
+                                    <button className="p-2 bg-red-600 rounded-3xl hover:bg-red-800" onClick={commentMutation.mutate}>
                                         <BiSend size={24} className="text-white" />
                                     </button>
                                 </section>
