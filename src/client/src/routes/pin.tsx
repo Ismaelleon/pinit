@@ -114,15 +114,15 @@ export default function Pin() {
                                         </p>
                                     }
                                     {data.comments.map((comment, index) => 
-                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} id={comment._id} key={index} />                                        
+                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} id={comment._id} deletable={userData.name === comment.author} key={index} />                                        
                                     )}
                                 </section>
-                                <section className="flex flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white">
-                                    <BiSolidUserCircle size={48} />
+                                <section className="grid grid-cols-[32px_auto_40px] flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white">
+                                    <BiSolidUserCircle size={32} />
                                     <input
                                         type="text"
                                         placeholder="Add a comment"
-                                        className="border border-neutral-400 text-base rounded w-full p-2 sm:text-sm w-full"
+                                        className="border border-neutral-400 text-sm rounded p-2 sm:text-sm"
                                         onChange={e => setCommentContent(e.target.value)}
                                     />
                                     <button className="p-2 bg-red-600 rounded-3xl hover:bg-red-800" onClick={commentMutation.mutate}>

@@ -939,6 +939,18 @@ video {
   grid-template-columns: 32px 50% 32px;
 }
 
+.grid-cols-\[40px_auto_40px\] {
+  grid-template-columns: 40px auto 40px;
+}
+
+.grid-cols-\[48px_auto_40px\] {
+  grid-template-columns: 48px auto 40px;
+}
+
+.grid-cols-\[42px_auto_40px\] {
+  grid-template-columns: 42px auto 40px;
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -989,6 +1001,10 @@ video {
 
 .self-end {
   align-self: flex-end;
+}
+
+.overflow-hidden {
+  overflow: hidden;
 }
 
 .overflow-scroll {
