@@ -114,7 +114,7 @@ export default function Pin() {
                                         </p>
                                     }
                                     {data.comments.map((comment, index) => 
-                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} id={comment._id} deletable={userData.name === comment.author} key={index} />                                        
+                                        <Comment content={comment.content} author={comment.author} date={comment.date} likes={comment.likes} id={comment._id} deletable={userData.name === comment.author} userName={userData.name} key={index} />                                        
                                     )}
                                 </section>
                                 <section className="grid grid-cols-[32px_auto_40px] flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white">

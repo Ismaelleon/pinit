@@ -7,12 +7,13 @@ interface Props {
     content: string;
     author: string;
     date: string;
-    likes: number;
+    likes: Array<String>;
     id: string;
     deletable: Boolean;
+    userName: string;
 };
 
-export default function Comment ({ content, author, date, likes, id, deletable }: Props) {
+export default function Comment ({ content, author, date, likes, id, deletable, userName }: Props) {
     const [liked, setLiked] = useState(false);
     const [options, setOptions] = useState(false);
     const filled = true;
@@ -20,14 +21,46 @@ export default function Comment ({ content, author, date, likes, id, deletable }
 
     const queryClient = useQueryClient();
 
-    const deleteCommentMutation = useMutation(deleteComment, {
-        onSuccess: (data) => {
+    const likeCommentMutation = useMutation(updateLikes, {
+        onSuccess: () => {
             queryClient.invalidateQueries('getPin');
-        }
+        },
     });
 
-    function updateLikes () {
-        
+    const deleteCommentMutation = useMutation(deleteComment, {
+        onSuccess: () => {
+            queryClient.invalidateQueries('getPin');
+        },
+    });
+
+    async function updateLikes () {
+        const res = await fetch('/api/pin/like-comment', {
+            method: 'POST',
+            body: JSON.stringify({
+                pinId: location.pathname.split('/')[2],
+                _id: id,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (res.status === 200) {
+            let commentData = await res.json();
+            let likes = commentData.likes;
+
+            if (likes.length > 0) {
+                likes.map((like: string) => {
+                    if (like === userName) {
+                        setLiked(true);
+                    } else {
+                        setLiked(false);
+                    }
+                })
+            } else {
+                setLiked(false);
+            }
+        }
     }
 
     async function deleteComment () {
@@ -61,10 +94,10 @@ export default function Comment ({ content, author, date, likes, id, deletable }
                 <section className="flex flex-row items-center gap-2">
                     <p className="text-xs">{date}</p>
                     {liked ? 
-                        <BiSolidHeart className="cursor-pointer text-red-400" onClick={updateLikes} size={16} /> 
+                        <BiSolidHeart className="cursor-pointer text-red-400" onClick={likeCommentMutation.mutate} size={16} /> 
                     : 
-                        <BiHeart className="cursor-pointer" onClick={updateLikes} size={16} />}
-                    <span className="text-xs -ml-1">{likes}</span>
+                        <BiHeart className="cursor-pointer" onClick={likeCommentMutation.mutate} size={16} />}
+                    <span className="text-xs -ml-1">{likes.length}</span>
                 </section>
             </section>
             <section>
