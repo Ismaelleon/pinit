@@ -41,6 +41,8 @@ export default function Board () {
             if (res.status === 200) {
                 let user = await res.json();
                 setUserData(user);
+            } else if (res.status === 401) {
+                navigate('/');
             }
         } catch (err) {
             console.log(err);

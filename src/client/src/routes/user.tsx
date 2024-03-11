@@ -9,13 +9,12 @@ export default function User () {
     const location = useLocation();
     const { isLoading, error, data } = useQuery('userData', async () => {
         try {
-                const res = await fetch(`/api/user?name=${location.pathname.split('/')[2]}`, {
+            const res = await fetch(`/api/user?name=${location.pathname.split('/')[2]}`, {
                 method: 'POST',
             });
 
             if (res.status === 200) {
                 let response = await res.json();
-                console.log(response);
                 return response;
             }
         } catch (err) {

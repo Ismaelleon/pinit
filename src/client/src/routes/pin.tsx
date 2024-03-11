@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "../components/navbar";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import PinOptions from "../components/pin-options";
 import PinLoading from '../components/pin-loading';
@@ -13,6 +13,7 @@ export default function Pin() {
     });
     const [commentContent, setCommentContent] = useState('');
 	const location = useLocation();
+    const navigate = useNavigate();
 
     const { isLoading, error, data } = useQuery('getPin', getPin);
     const queryClient = useQueryClient();
@@ -49,6 +50,8 @@ export default function Pin() {
             if (res.status === 200) {
                 let user = await res.json();
                 setUserData(user);
+            } else {
+                navigate('/');
             }
         } catch (err) {
             console.log(err);

@@ -20,8 +20,7 @@ async function signUp(req: Request, res: Response) {
 		if (user !== null) {
 			return res.status(409).end();
 		}
-
-        let activationKey = crypto.randomBytes(16).toString('hex');
+let activationKey = crypto.randomBytes(16).toString('hex');
 
 		const newUser = new User({
             name,

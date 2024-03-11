@@ -19,7 +19,7 @@ export default function Create() {
 	const navigate = useNavigate();
     const newBoardInput: LegacyRef<HTMLInputElement> = useRef(null);
 
-	function getUser() {
+	function getUser () {
 		fetch("/api/user/", {
 			method: "POST",
 		}).then(async (res) => {
@@ -27,7 +27,9 @@ export default function Create() {
 				let user = await res.json();
 
 				setBoards(user.boards!);
-			}
+			} else if (res.status === 401) {
+                navigate('/');
+            }
 		});
 	}
 

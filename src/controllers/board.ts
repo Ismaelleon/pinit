@@ -2,15 +2,15 @@ import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../models/user";
 import Pin from "../models/pin";
+import { checkAuth } from "../helpers";
 
 async function newBoard(req: Request, res: Response) {
 	try {
-		const name = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
-		const user = await User.findOne({ name });
+        const { auth, user } = await checkAuth(req.cookies.token);
 
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
 		let boardName = req.body.name;
 
@@ -18,14 +18,14 @@ async function newBoard(req: Request, res: Response) {
             return res.sendStatus(400).end();     
         }
 
-        for (let board of user.boards) {
+        for (let board of user!.boards) {
             if (board.name === boardName) {
                 return res.sendStatus(400).end();
             }
         }
 
-		user.boards.push({ name: boardName, pins: [], author: user.name });
-		await user.save();
+		user!.boards.push({ name: boardName, pins: [], author: user!.name });
+		await user!.save();
 
 		return res.sendStatus(200).end();
 	} catch (err) {
@@ -41,10 +41,9 @@ interface Board {
 
 async function getBoard(req: Request, res: Response) {
     try {
-        const name = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
-        let user = await User.findOne({ name });
+        const { auth } = await checkAuth(req.cookies.token);
 
-        if (user === null) {
+        if (!auth) {
             return res.sendStatus(401).end();
         }
 
@@ -80,20 +79,21 @@ async function getBoard(req: Request, res: Response) {
 
 async function deleteBoard (req: Request, res: Response) {
     try {
-		const name = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
-        const user = await User.findOne({ name });
-        const { id } = req.params;
+        const { auth, user } = await checkAuth(req.cookies.token);
 
-        if (user === null) {
-			return res.sendStatus(401).end();
+        if (!auth) {
+            return res.sendStatus(401).end();
         }
 
-        let board = user.boards.filter((board: Board) => board._id.toString() === id);
+        const { id } = req.params;
+
+
+        let board = user!.boards.filter((board: Board) => board._id.toString() === id);
         await Pin.deleteMany({ board: board[0].name });
         
-        user.boards = user.boards.filter((board: Board) => board._id.toString() !== id);
+        user!.boards = user!.boards.filter((board: Board) => board._id.toString() !== id);
 
-        await user.save();
+        await user!.save();
         
         return res.end(); 
     } catch (err) {

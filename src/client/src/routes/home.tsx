@@ -2,13 +2,15 @@ import { useQuery } from "react-query";
 import Navbar from "../components/navbar";
 import HomeLoading from "../components/home-loading";
 import Pin from "../components/pin";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Home () {
     const [userData, setUserData] = useState({
         name: '',
     });
     const { isLoading, error, data } = useQuery('getLatestPins', getLatestPins);
+    const navigate = useNavigate();
 
     async function getLatestPins () {
         try {
@@ -19,6 +21,8 @@ export default function Home () {
             if (res.status === 200) {
                 let response = await res.json();
                 return response;
+            } else if (res.status === 401) {
+                navigate('/');
             }
         } catch (err) {
             console.log(err);
@@ -34,6 +38,8 @@ export default function Home () {
             if (res.status === 200) {
                 let user = await res.json();
                 setUserData(user);
+            } else if (res.status === 401) {
+                navigate('/');
             }
         } catch (err) {
             console.log(err);

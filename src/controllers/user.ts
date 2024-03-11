@@ -7,6 +7,10 @@ async function getUser(req: Request, res: Response) {
         let name = req.query.name;
 
         if (name === undefined) {
+            if (req.cookies.token === undefined) {
+                return res.sendStatus(401).end();
+            }
+
             let payload: string | JwtPayload  = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
 
             //@ts-ignore

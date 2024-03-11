@@ -3,22 +3,17 @@ import mongoose from "mongoose";
 import path from "path";
 import { v2 as cloudinary } from "cloudinary";
 import { Request, Response } from "express";
-import User from "../models/user";
 import Pin from '../models/pin';
 import Jimp from "jimp";
+import { checkAuth } from '../helpers/index';
 
 async function newPin (req: Request, res: Response) {
 	try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth, user } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
 		const { title, content, url, boardName } = req.body;
 
@@ -54,23 +49,23 @@ async function newPin (req: Request, res: Response) {
 				public_id: result.public_id,
 			},
 			board: boardName,
-			author: user.name,
+			author: user!.name,
             _id: pinId,
 		});
 
 		await newPin.save();
 
-        for (let i = 0; i < user.boards.length; i++) {
-            if (user.boards[i].name === boardName) {
-                if (user.boards[i].pins.length === 0) {
-                    user.boards[i].thumbnail = result.secure_url;
+        for (let i = 0; i < user!.boards.length; i++) {
+            if (user!.boards[i].name === boardName) {
+                if (user!.boards[i].pins.length === 0) {
+                    user!.boards[i].thumbnail = result.secure_url;
                 }
 
-                user.boards[i].pins.push(pinId.toString());
+                user!.boards[i].pins.push(pinId.toString());
             }
         }
 
-        await user.save();
+        await user!.save();
 
 		return res.json({ id: newPin._id }).end();
 	} catch (err) {
@@ -80,16 +75,12 @@ async function newPin (req: Request, res: Response) {
 
 async function getLatestPins (req: Request, res: Response) {
     try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        console.log(auth);
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
         const pins = await Pin.find({}).limit(20);
 
@@ -119,16 +110,11 @@ async function getPin (req: Request, res: Response) {
 
 async function deletePin (req: Request, res: Response) {
     try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth, user } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
         let { id } = req.params;
         const pin = await Pin.findOne({ _id: id });
@@ -137,20 +123,20 @@ async function deletePin (req: Request, res: Response) {
             return res.sendStatus(404).end();
         }
 
-        if (pin.author === user.name) {
+        if (pin.author === user!.name) {
             await Pin.deleteOne({ _id: id });
 
-            for (let i = 0; i < user.boards.length; i++) {
-                if (user.boards[i].pins.includes(id)) {
-                    for (let j = 0; j < user.boards[i].pins.length; j++) {
-                        if (user.boards[i].pins[j] === id) {
-                            user.boards[i].pins.splice(j, 1); 
+            for (let i = 0; i < user!.boards.length; i++) {
+                if (user!.boards[i].pins.includes(id)) {
+                    for (let j = 0; j < user!.boards[i].pins.length; j++) {
+                        if (user!.boards[i].pins[j] === id) {
+                            user!.boards[i].pins.splice(j, 1); 
                         }
                     }
                 }
             }
 
-            await user.save();
+            await user!.save();
         }
 
         return res.end();
@@ -161,16 +147,11 @@ async function deletePin (req: Request, res: Response) {
 
 async function commentPin (req: Request, res: Response) {
     try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
         let { id, content, author, date } = req.body;
         const pin = await Pin.findOne({ _id: new mongoose.Types.ObjectId(id) });
@@ -197,16 +178,11 @@ async function commentPin (req: Request, res: Response) {
 
 async function likeCommentPin (req: Request, res: Response) {
     try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth, user } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
         let { pinId, _id } = req.body;
         const pin = await Pin.findOne({ _id: new mongoose.Types.ObjectId(pinId) });
@@ -215,7 +191,7 @@ async function likeCommentPin (req: Request, res: Response) {
             return res.sendStatus(404).end();
         }
 
-        let likedComment;
+        let likedComment = {};
 
         pin.comments.map(comment => {
             if (comment._id === _id) {
@@ -245,16 +221,11 @@ async function likeCommentPin (req: Request, res: Response) {
 
 async function uncommentPin (req: Request, res: Response) {
     try {
-		let name = jwt.verify(
-			req.cookies.token,
-			process.env.JWT_SECRET!
-		);
+        const { auth } = await checkAuth(req.cookies.token);
 
-		let user = await User.findOne({ name });
-
-		if (user === null) {
-			return res.sendStatus(401).end();
-		}
+        if (!auth) {
+            return res.sendStatus(401).end();
+        }
 
         let { pinId, _id } = req.body;
         const pin = await Pin.findOne({ _id: new mongoose.Types.ObjectId(pinId) });

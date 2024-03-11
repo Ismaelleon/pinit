@@ -16,6 +16,8 @@ export default function Profile () {
             if (res.status === 200) {
                 let response = await res.json();
                 return response;
+            } else {
+                navigate('/');
             }
         } catch (err) {
             console.log(err);
