@@ -9,10 +9,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 cloudinary.config({
-	secure: true,
-	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
-	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    secure: true,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
 });
 
 const app: Application = express();
@@ -25,5 +25,5 @@ app.use(bodyParser.json());
 app.use('/api', router);
 
 app.listen(port, () => {
-	console.log(`app running on port ${port}`);
+    console.log(`app running on port ${port}`);
 });

@@ -1,6 +1,6 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
-import { Request, Response } from "express";
-import User from "../models/user";
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { Request, Response } from 'express';
+import User from '../models/user';
 
 async function getUser(req: Request, res: Response) {
     try {
@@ -11,13 +11,18 @@ async function getUser(req: Request, res: Response) {
                 return res.sendStatus(401).end();
             }
 
-            let payload: string | JwtPayload  = jwt.verify(req.cookies.token, process.env.JWT_SECRET!);
+            let payload: string | JwtPayload = jwt.verify(
+                req.cookies.token,
+                process.env.JWT_SECRET!,
+            );
 
             //@ts-ignore
             name = payload;
         }
 
-        const user = await User.findOne({ name }).select("name boards verified");
+        const user = await User.findOne({ name }).select(
+            'name boards verified',
+        );
 
         if (user === null) {
             return res.sendStatus(401).end();

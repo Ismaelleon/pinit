@@ -1,6 +1,6 @@
 import Navbar from './navbar';
 
-export default function ProfileLoading () {
+export default function ProfileLoading() {
     return (
         <>
             <Navbar />
@@ -14,25 +14,24 @@ export default function ProfileLoading () {
                         </section>
                     </header>
                     <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
-                        <section className="flex flex-col"> 
+                        <section className="flex flex-col">
                             <div className="w-full h-64 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>
                             <div className="w-28 h-4 rounded bg-neutral-400 mt-2"></div>
                         </section>
 
-                        <section className="flex flex-col"> 
+                        <section className="flex flex-col">
                             <div className="w-full h-72 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>
                             <div className="w-28 h-4 rounded bg-neutral-400 mt-2"></div>
                         </section>
 
-                        <section className="flex flex-col"> 
+                        <section className="flex flex-col">
                             <div className="w-full h-56 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>
                             <div className="w-28 h-4 rounded bg-neutral-400 mt-2"></div>
                         </section>
                     </section>
-
                 </section>
             </main>
         </>

@@ -1,18 +1,18 @@
-import { useQuery } from "react-query";
-import Navbar from "../components/navbar";
-import HomeLoading from "../components/home-loading";
-import Pin from "../components/pin";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useQuery } from 'react-query';
+import Navbar from '../components/navbar';
+import HomeLoading from '../components/home-loading';
+import Pin from '../components/pin';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function Home () {
+export default function Home() {
     const [userData, setUserData] = useState({
         name: '',
     });
     const { isLoading, error, data } = useQuery('getLatestPins', getLatestPins);
     const navigate = useNavigate();
 
-    async function getLatestPins () {
+    async function getLatestPins() {
         try {
             const res = await fetch(`/api/pin/latest`, {
                 method: 'POST',
@@ -29,7 +29,7 @@ export default function Home () {
         }
     }
 
-    async function getUserData () {
+    async function getUserData() {
         try {
             const res = await fetch('/api/user', {
                 method: 'POST',
@@ -62,18 +62,23 @@ export default function Home () {
                     <section className="flex flex-col max-w-3xl w-full">
                         {data.length > 0 ? (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
-                                {data.map((pin: any, index: number) =>
-                                    <Pin userName={userData.name}
-                                        id={pin._id} 
-                                        title={pin.title} 
-                                        author={pin.author} 
-                                        image={pin.image.url} 
+                                {data.map((pin: any, index: number) => (
+                                    <Pin
+                                        userName={userData.name}
+                                        id={pin._id}
+                                        title={pin.title}
+                                        author={pin.author}
+                                        image={pin.image.url}
                                         redirect={false}
-                                        key={index} />
-                                )} 
+                                        key={index}
+                                    />
+                                ))}
                             </section>
-                        )
-                        : <p className="text-center text-lg font-bold">No pins yet!</p>}
+                        ) : (
+                            <p className="text-center text-lg font-bold">
+                                No pins yet!
+                            </p>
+                        )}
                     </section>
                 </main>
             </>

@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Pin from '../components/pin';
 import { BiDotsHorizontal, BiTrash } from 'react-icons/bi';
 
-export default function Board () {
+export default function Board() {
     const [userData, setUserData] = useState({
         name: '',
     });
@@ -15,11 +15,14 @@ export default function Board () {
 
     const { isLoading, error, data } = useQuery('getBoard', getBoard);
 
-    async function getBoard () {
+    async function getBoard() {
         try {
-            const res = await fetch(`/api/board/${location.pathname.split('/')[2]}`, {
-                method: 'POST',
-            });
+            const res = await fetch(
+                `/api/board/${location.pathname.split('/')[2]}`,
+                {
+                    method: 'POST',
+                },
+            );
 
             if (res.status === 200) {
                 let response = await res.json();
@@ -32,7 +35,7 @@ export default function Board () {
         }
     }
 
-    async function getUserData () {
+    async function getUserData() {
         try {
             const res = await fetch('/api/user', {
                 method: 'POST',
@@ -49,14 +52,14 @@ export default function Board () {
         }
     }
 
-    async function deleteBoard (boardId: string) {
+    async function deleteBoard(boardId: string) {
         try {
             const res = await fetch(`/api/board/delete/${boardId}`, {
                 method: 'POST',
             });
 
             if (res.status === 200) {
-                navigate(-1); 
+                navigate(-1);
             }
         } catch (err) {
             console.log(err);
@@ -75,33 +78,61 @@ export default function Board () {
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <span className="flex justify-between flex-row">
-                                <h1 className="text-2xl font-bold sm:text-xl">{data.name}</h1>                 
+                                <h1 className="text-2xl font-bold sm:text-xl">
+                                    {data.name}
+                                </h1>
                                 {userData.name === data.author && (
-                                    <button className="p-2 hover:bg-neutral-200 relative rounded-full" onClick={() => setOptions(!options)}>
+                                    <button
+                                        className="p-2 hover:bg-neutral-200 relative rounded-full"
+                                        onClick={() => setOptions(!options)}
+                                    >
                                         <BiDotsHorizontal className="text-2xl" />
-                                        <ul className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
-                                            style={options ? { display: 'flex' } : { display: 'none' }}>
-                                            <li className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500" 
-                                                onClick={() => deleteBoard(data._id)}>
-                                                <BiTrash className="float-left ml-1 mr-2 text-lg" /> Delete Board 
+                                        <ul
+                                            className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
+                                            style={
+                                                options
+                                                    ? { display: 'flex' }
+                                                    : { display: 'none' }
+                                            }
+                                        >
+                                            <li
+                                                className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500"
+                                                onClick={() =>
+                                                    deleteBoard(data._id)
+                                                }
+                                            >
+                                                <BiTrash className="float-left ml-1 mr-2 text-lg" />{' '}
+                                                Delete Board
                                             </li>
                                         </ul>
                                     </button>
                                 )}
                             </span>
                             <p>
-                                Created by  
-                                <Link to={`/user/${data.author}`} className="font-bold"> {data.author}</Link>
+                                Created by
+                                <Link
+                                    to={`/user/${data.author}`}
+                                    className="font-bold"
+                                >
+                                    {' '}
+                                    {data.author}
+                                </Link>
                             </p>
-                            <p className="mb-3">
-                                {data.pins.length} pins
-                            </p>
+                            <p className="mb-3">{data.pins.length} pins</p>
                         </header>
                         {data.pins.length > 0 && (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">
-                                {data.pins.map((pin: any, index: number) =>
-                                    <Pin userName={userData.name} id={pin._id} title={pin.title} author={pin.author} image={pin.image.url} key={index} redirect={false} />
-                                )} 
+                                {data.pins.map((pin: any, index: number) => (
+                                    <Pin
+                                        userName={userData.name}
+                                        id={pin._id}
+                                        title={pin.title}
+                                        author={pin.author}
+                                        image={pin.image.url}
+                                        key={index}
+                                        redirect={false}
+                                    />
+                                ))}
                             </section>
                         )}
                     </section>

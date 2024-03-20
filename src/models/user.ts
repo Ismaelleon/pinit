@@ -6,31 +6,31 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
         type: String,
         required: true,
     },
-	email: {
-		type: String,
-		required: true,
-	},
-	password: {
-		type: String,
-		required: true,
-	},
-	birthday: String,
-	activationKey: {
-		type: String,
-		required: true,
-	},
-	activated: {
-		type: Boolean,
-		default: false,
-	},
-	boards: [
-		{
-			name: String,
-			pins: [],
+    email: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    },
+    birthday: String,
+    activationKey: {
+        type: String,
+        required: true,
+    },
+    activated: {
+        type: Boolean,
+        default: false,
+    },
+    boards: [
+        {
+            name: String,
+            pins: [],
             thumbnail: String,
             author: String,
-		}
-	],
+        },
+    ],
     verified: {
         type: Boolean,
         default: false,
@@ -38,17 +38,17 @@ const userSchema: mongoose.Schema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
-	try {
+    try {
         let user = this;
-        
+
         if (!user.isModified('password')) return next();
 
-		const hashedPassword = await bcrypt.hash(user.password, 10);
-		this.password = hashedPassword;
-		next();
-	} catch (err) {
-		console.log(err);
-	}
+        const hashedPassword = await bcrypt.hash(user.password, 10);
+        this.password = hashedPassword;
+        next();
+    } catch (err) {
+        console.log(err);
+    }
 });
 
 const User = mongoose.model('user', userSchema, 'users');

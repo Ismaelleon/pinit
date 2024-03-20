@@ -1,21 +1,21 @@
-import jwt from "jsonwebtoken";
-import { Request, Response } from "express";
-import User from "../models/user";
-import Pin from "../models/pin";
-import { checkAuth } from "../helpers";
+import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
+import User from '../models/user';
+import Pin from '../models/pin';
+import { checkAuth } from '../helpers';
 
 async function newBoard(req: Request, res: Response) {
-	try {
+    try {
         const { auth, user } = await checkAuth(req.cookies.token);
 
         if (!auth) {
             return res.sendStatus(401).end();
         }
 
-		let boardName = req.body.name;
+        let boardName = req.body.name;
 
         if (boardName.length < 4) {
-            return res.sendStatus(400).end();     
+            return res.sendStatus(400).end();
         }
 
         for (let board of user!.boards) {
@@ -24,13 +24,13 @@ async function newBoard(req: Request, res: Response) {
             }
         }
 
-		user!.boards.push({ name: boardName, pins: [], author: user!.name });
-		await user!.save();
+        user!.boards.push({ name: boardName, pins: [], author: user!.name });
+        await user!.save();
 
-		return res.sendStatus(200).end();
-	} catch (err) {
-		console.log(err);
-	}
+        return res.sendStatus(200).end();
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 interface Board {
@@ -64,7 +64,7 @@ async function getBoard(req: Request, res: Response) {
         }
 
         for (let i = 0; i < board.pins.length; i++) {
-            const pin = await Pin.findOne({ _id: board.pins[i] });    
+            const pin = await Pin.findOne({ _id: board.pins[i] });
 
             board.pins[i] = pin;
         }
@@ -77,7 +77,7 @@ async function getBoard(req: Request, res: Response) {
     }
 }
 
-async function deleteBoard (req: Request, res: Response) {
+async function deleteBoard(req: Request, res: Response) {
     try {
         const { auth, user } = await checkAuth(req.cookies.token);
 
@@ -87,15 +87,18 @@ async function deleteBoard (req: Request, res: Response) {
 
         const { id } = req.params;
 
-
-        let board = user!.boards.filter((board: Board) => board._id.toString() === id);
+        let board = user!.boards.filter(
+            (board: Board) => board._id.toString() === id,
+        );
         await Pin.deleteMany({ board: board[0].name });
-        
-        user!.boards = user!.boards.filter((board: Board) => board._id.toString() !== id);
+
+        user!.boards = user!.boards.filter(
+            (board: Board) => board._id.toString() !== id,
+        );
 
         await user!.save();
-        
-        return res.end(); 
+
+        return res.end();
     } catch (err) {
         console.log(err);
     }
