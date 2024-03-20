@@ -77,7 +77,6 @@ async function getLatestPins (req: Request, res: Response) {
     try {
         const { auth } = await checkAuth(req.cookies.token);
 
-        console.log(auth);
         if (!auth) {
             return res.sendStatus(401).end();
         }

@@ -96,7 +96,7 @@ export default function Pin() {
                             <PinOptions userName={userData.name} pinAuthor={data.author} image={data.image.url} pinId={data._id} filled={true} redirect={true} />
                             <section className="p-2">
                                 {data.url === '' ? 
-                                    <h2 className="text-xl font-bold mb-2 hover:underline">
+                                    <h2 className={`text-xl font-bold mb-2 ${data.url !== '' && 'hover:underline'}}`}>
                                         {data.title}
                                     </h2>
                                 :
