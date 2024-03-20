@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 interface Props {
 	signUpModal: boolean;
 	setSignUpModal: Function;
+	setLogInModal: Function;
 }
 
 export default function SignUp(props: Props) {
@@ -164,7 +165,12 @@ export default function SignUp(props: Props) {
 						Sign Up
 					</button>
 
-					<button className="mt-3 text-xs text-neutral-800 hover:text-black hover:underline">
+					<button className="mt-3 text-xs text-neutral-800 hover:text-black hover:underline"
+						onClick={e => {
+							e.preventDefault();
+							props.setSignUpModal(false);
+							props.setLogInModal(true);
+						}}>
 						Already have an account? <span>Log In</span>
 					</button>
 				</form>

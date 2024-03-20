@@ -57,8 +57,8 @@ export default function Index() {
 					</h1>
 				</section>
 			</main>
-			<LogIn logInModal={logInModal} setLogInModal={setLogInModal} />
-			<SignUp signUpModal={signUpModal} setSignUpModal={setSignUpModal} />
+			<LogIn logInModal={logInModal} setLogInModal={setLogInModal} setSignUpModal={setSignUpModal} />
+			<SignUp signUpModal={signUpModal} setSignUpModal={setSignUpModal} setLogInModal={setLogInModal} />
 		</>
 	);
 }
