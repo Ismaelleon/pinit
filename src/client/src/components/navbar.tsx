@@ -8,7 +8,7 @@ export default function Navbar() {
 	const [accountDropDown, setAccountDropDown] = useState(false);
 
     return (
-        <nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50">
+        <nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50 dark:bg-neutral-900 dark:text-white">
             <div className="flex justify-between items-center max-w-4xl w-full">
                 <Link to="/home" className="text-xl font-bold mr-6">
                     Pinit
@@ -52,7 +52,7 @@ export default function Navbar() {
 							<BiSolidUserCircle size={32} />
 							<BiChevronDown size={16} />
 						</span>
-						<ul className={`fixed top-[40px] left-0 bg-white p-3 w-full sm:w-auto sm:left-auto sm:-translate-x-full sm:ml-[48px] ${!accountDropDown && 'hidden'}`}>
+						<ul className={`fixed top-[40px] left-0 bg-white p-3 w-full sm:w-auto sm:left-auto sm:-translate-x-full sm:ml-[48px] dark:bg-neutral-900 ${!accountDropDown && 'hidden'}`}>
 							<li className="py-2 sm:py-0">
 								<Link to="/profile" className="flex flex-row items-center gap-2 hover:underline">
 									<BiSolidUserCircle size={24} className="sm:scale-[0.75]" />

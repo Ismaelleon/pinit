@@ -74,7 +74,7 @@ export default function Board() {
         return (
             <>
                 <Navbar />
-                <main className="flex justify-center mt-[64px] p-4">
+                <main className="flex justify-center mt-[64px] p-4 dark:text-white">
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <span className="flex justify-between flex-row">
@@ -83,12 +83,13 @@ export default function Board() {
                                 </h1>
                                 {userData.name === data.author && (
                                     <button
-                                        className="p-2 hover:bg-neutral-200 relative rounded-full"
+                                        className={`p-2 relative rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-800
+											${options && 'dark:bg-neutral-800 bg-neutral-200'}`}
                                         onClick={() => setOptions(!options)}
                                     >
                                         <BiDotsHorizontal className="text-2xl" />
                                         <ul
-                                            className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
+                                            className="flex-col list-none absolute bg-white dark:bg-neutral-800 shadow p-2 rounded-sm mt-3 right-0 z-20 w-max"
                                             style={
                                                 options
                                                     ? { display: 'flex' }
@@ -96,7 +97,7 @@ export default function Board() {
                                             }
                                         >
                                             <li
-                                                className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 rounded-sm text-red-500"
+                                                className="flex flex-row items-center text-left p-2 hover:bg-neutral-200 dark:hover:bg-neutral-900 rounded-sm text-red-500"
                                                 onClick={() =>
                                                     deleteBoard(data._id)
                                                 }

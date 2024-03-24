@@ -30,7 +30,6 @@ export default function Comment({
 }: Props) {
     const [liked, setLiked] = useState(false);
     const [options, setOptions] = useState(false);
-    const filled = true;
     const location = useLocation();
 
     const queryClient = useQueryClient();
@@ -131,14 +130,13 @@ export default function Comment({
             <section>
                 {deletable && (
                     <button
-                        className={`ml-auto p-2 hover:bg-neutral-300 rounded-full col-start-3 col-end-4 ${
-                            filled && 'bg-neutral-200'
-                        } ${options ? 'bg-neutral-200' : ''}`}
+                        className={`ml-auto p-2 bg-neutral-200 hover:bg-neutral-300 rounded-full col-start-3 col-end-4 dark:bg-neutral-700 dark:hover:bg-neutral-800 
+							${options && 'bg-neutral-300 dark:bg-neutral-800'}`}
                         onClick={() => setOptions(!options)}
                     >
                         <BiDotsHorizontal className="text-2xl" />
                         <ul
-                            className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2 right-0"
+                            className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2 right-0 dark:bg-neutral-800"
                             style={
                                 options
                                     ? { display: 'flex' }
@@ -146,7 +144,7 @@ export default function Comment({
                             }
                         >
                             <li
-                                className="flex flex-row items-center text-left text-sm p-2 hover:bg-neutral-300 rounded-sm text-red-500"
+                                className="flex flex-row items-center text-left text-sm p-2 hover:bg-neutral-300 rounded-sm text-red-500 hover:dark:bg-neutral-900"
                                 onClick={deleteCommentMutation.mutate}
                             >
                                 <BiTrash className="float-left ml-1 mr-2 text-base" />{' '}

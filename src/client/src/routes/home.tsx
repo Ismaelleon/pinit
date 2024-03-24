@@ -58,7 +58,7 @@ export default function Home() {
         return (
             <>
                 <Navbar />
-                <main className="flex justify-center mt-[64px] p-4">
+                <main className="flex justify-center mt-[64px] p-4 dark:text-white">
                     <section className="flex flex-col max-w-3xl w-full">
                         {data.length > 0 ? (
                             <section className="grid gap-4 grid-cols-2 sm:grid-cols-3">

@@ -32,7 +32,7 @@ export default function Profile() {
         return (
             <>
                 <Navbar />
-                <main className="flex justify-center mt-[64px] p-4">
+                <main className="flex justify-center mt-[64px] p-4 dark:text-white">
                     <section className="flex flex-col max-w-3xl w-full">
                         <header className="mb-3">
                             <BiSolidUserCircle size={64} />

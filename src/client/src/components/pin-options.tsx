@@ -8,8 +8,7 @@ interface Props {
     pinAuthor: string;
     pinId: string;
     image: string;
-    filled: Boolean;
-    redirect: Boolean;
+    redirect: boolean;
 }
 
 export default function PinOptions({
@@ -17,7 +16,6 @@ export default function PinOptions({
     pinAuthor,
     pinId,
     image,
-    filled,
     redirect,
 }: Props) {
     const [options, setOptions] = useState(false);
@@ -35,7 +33,7 @@ export default function PinOptions({
                 if (redirect) {
                     navigate(-1);
                 } else {
-                    let route = location.pathname.split('/')[1];
+                    const route = location.pathname.split('/')[1];
                     if (route === 'board') {
                         queryClient.invalidateQueries('getBoard');
                     } else if (route === 'home') {
@@ -56,18 +54,18 @@ export default function PinOptions({
             }}
         >
             <button
-                className={`p-2 hover:bg-neutral-300 rounded-full ${
-                    filled && 'bg-neutral-200'
-                } ${options ? 'bg-neutral-200' : ''}`}
+                className={`p-2 bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-800
+					${options && 'bg-neutral-300 dark:bg-neutral-800'}
+					rounded-full`}
                 onClick={() => setOptions(!options)}
             >
                 <BiDotsHorizontal className="text-2xl" />
                 <ul
-                    className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2"
+                    className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2 dark:bg-neutral-800 dark:text-white"
                     style={options ? { display: 'flex' } : { display: 'none' }}
                 >
                     <li
-                        className="flex flex-row items-center text-left p-2 hover:bg-neutral-300 rounded-sm"
+                        className="flex flex-row items-center text-left p-2 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900"
                         onClick={() => window.open(image)}
                     >
                         <BiDownload className="float-left ml-1 mr-2 text-lg" />{' '}
@@ -75,7 +73,7 @@ export default function PinOptions({
                     </li>
                     {userName === pinAuthor && (
                         <li
-                            className="flex flex-row items-center text-left p-2 hover:bg-neutral-300 rounded-sm text-red-500"
+                        className="flex flex-row items-center text-left p-2 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900 text-red-500"
                             onClick={() => {
                                 deletePin(pinId);
                             }}

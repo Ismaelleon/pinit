@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import DarkModeProvider from './context/dark-mode';
 import './index.css';
 
 // Import routes
@@ -12,6 +13,7 @@ import Activate from './routes/activate';
 import Profile from './routes/profile';
 import Board from './routes/board';
 import User from './routes/user';
+import Settings from './routes/settings';
 
 const router = createBrowserRouter([
     {
@@ -46,6 +48,10 @@ const router = createBrowserRouter([
         path: '/board/:id',
         element: <Board />,
     },
+	{
+		path: '/settings',
+		element: <Settings />
+	}
 ]);
 
 const queryClient = new QueryClient({
@@ -60,7 +66,9 @@ function App() {
     return (
         <React.StrictMode>
             <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router} />
+				<DarkModeProvider>
+					<RouterProvider router={router} />
+				</DarkModeProvider>
             </QueryClientProvider>
         </React.StrictMode>
     );

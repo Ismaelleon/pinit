@@ -92,7 +92,7 @@ export default function Pin() {
         return (
             <>
                 <Navbar />
-                <main className="flex justify-center mt-[64px] p-4">
+                <main className="flex justify-center mt-[64px] p-4 dark:text-white">
                     <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-2">
                         <img
                             src={data.image.url}
@@ -159,12 +159,12 @@ export default function Pin() {
                                         />
                                     ))}
                                 </section>
-                                <section className="grid grid-cols-[32px_auto_40px] flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white">
+                                <section className="grid grid-cols-[32px_auto_40px] flex-row items-center gap-2 absolute bottom-0 translate-y-full w-full bg-white dark:bg-neutral-900">
                                     <BiSolidUserCircle size={32} />
                                     <input
                                         type="text"
                                         placeholder="Add a comment"
-                                        className="border border-neutral-400 text-sm rounded p-2 sm:text-sm"
+                                        className="border border-neutral-400 text-sm rounded p-2 sm:text-sm bg-transparent dark:text-white"
                                         onChange={(e) =>
                                             setCommentContent(e.target.value)
                                         }

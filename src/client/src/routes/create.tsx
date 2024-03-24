@@ -93,7 +93,7 @@ export default function Create() {
         <div>
             <LoadingBar color="#dc2626" ref={bar} />
             <Navbar />
-            <main className="flex justify-center mt-[64px] p-4">
+            <main className="flex justify-center mt-[64px] p-4 dark:text-white">
                 <section className="flex flex-col max-w-3xl">
                     <h1 className="text-2xl font-bold mb-3 sm:text-xl">
                         New Pin
@@ -181,7 +181,7 @@ export default function Create() {
                             <input
                                 type="text"
                                 placeholder="Add a Title"
-                                className={`border text-base rounded w-full p-2 sm:text-sm ${
+                                className={`border text-base rounded w-full p-2 sm:text-sm bg-transparent dark:text-white ${
                                     title.error
                                         ? 'border-red-400'
                                         : 'border-neutral-400'
@@ -203,7 +203,7 @@ export default function Create() {
                             <textarea
                                 placeholder="Tell everyone about your Pin."
                                 rows={4}
-                                className="border-neutral-400 border text-base rounded w-full p-2 mt-3 mb-3 resize-none sm:text-sm"
+                                className="border-neutral-400 border text-base rounded w-full p-2 mt-3 mb-3 resize-none sm:text-sm bg-transparent dark:text-white"
                                 onInput={(e) =>
                                     setContent(e.currentTarget.value)
                                 }
@@ -211,11 +211,11 @@ export default function Create() {
                             <input
                                 type="text"
                                 placeholder="Add a URL"
-                                className="border-neutral-400 border text-base rounded w-full p-2 mb-3 sm:text-sm"
+                                className="border-neutral-400 border text-base rounded w-full p-2 mb-3 sm:text-sm bg-transparent dark:text-white"
                                 onInput={(e) => setUrl(e.currentTarget.value)}
                             />
                             <select
-                                className="border-neutral-400 border text-base rounded w-full p-2 mb-3 bg-white sm:text-sm"
+                                className="border-neutral-400 border text-base rounded w-full p-2 mb-3 sm:text-sm bg-transparent dark:text-white"
                                 onChange={(e) => {
                                     setBoard(e.currentTarget.value);
                                     setNewBoard({
@@ -248,7 +248,7 @@ export default function Create() {
                                     <input
                                         type="text"
                                         placeholder="Board name"
-                                        className={`border text-base rounded w-75 p-2 bg-white sm:text-sm ${
+                                        className={`border text-base rounded w-75 p-2 sm:text-sm bg-transparent dark:text-white ${
                                             newBoard.error
                                                 ? 'border-red-400'
                                                 : 'border-neutral-400'
