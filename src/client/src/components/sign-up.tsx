@@ -49,10 +49,10 @@ export default function SignUp(props: Props) {
                 props.signUpModal ? { display: 'flex' } : { display: 'none' }
             }
         >
-            <div className="flex flex-col p-5 bg-white rounded">
+            <div className="flex flex-col p-5 bg-white rounded dark:bg-neutral-800 dark:text-white">
                 <header className="mb-3 flex justify-end">
                     <button
-                        className="p-1 rounded-full font-bold hover:bg-neutral-200"
+                        className="p-1 rounded-full font-bold hover:bg-neutral-200 dark:hover:bg-neutral-900"
                         onClick={() => props.setSignUpModal(!props.signUpModal)}
                     >
                         <svg
@@ -79,7 +79,7 @@ export default function SignUp(props: Props) {
                         type="text"
                         className={`p-2 ${
                             name.valid ? 'border-neutral-200' : 'border-red-400'
-                        } border text-base rounded`}
+                        } border text-base rounded bg-transparent`}
                         placeholder="p1nt3r3st"
                         onInput={(e) => {
                             let value = e.currentTarget.value;
@@ -104,7 +104,7 @@ export default function SignUp(props: Props) {
                             email.valid
                                 ? 'border-neutral-200'
                                 : 'border-red-400'
-                        } border text-base rounded`}
+                        } border text-base rounded bg-transparent`}
                         placeholder="example@pinit.com"
                         onInput={(e) => {
                             let value = e.currentTarget.value;
@@ -129,7 +129,7 @@ export default function SignUp(props: Props) {
                             password.valid
                                 ? 'border-neutral-200'
                                 : 'border-red-400'
-                        } border text-base rounded`}
+                        } border text-base rounded bg-transparent`}
                         placeholder="secretpwd321"
                         onInput={(e) => {
                             let value = e.currentTarget.value;
@@ -145,7 +145,7 @@ export default function SignUp(props: Props) {
                             birthday.valid
                                 ? 'border-neutral-200'
                                 : 'border-red-400'
-                        } border text-base rounded w-full bg-white`}
+                        } border text-base rounded w-full bg-transparent`}
                         onInput={(e) => {
                             let value = e.currentTarget.value;
                             let valid =
@@ -164,7 +164,7 @@ export default function SignUp(props: Props) {
                     </button>
 
                     <button
-                        className="mt-3 text-xs text-neutral-800 hover:text-black hover:underline"
+                        className="mt-3 text-xs text-neutral-800 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-white"
                         onClick={(e) => {
                             e.preventDefault();
                             props.setSignUpModal(false);

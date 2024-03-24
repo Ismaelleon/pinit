@@ -26,7 +26,7 @@ export default function Index() {
 
     return (
         <>
-            <header className="flex w-full justify-center p-3 fixed left-0 top-0 bg-white">
+            <header className="flex w-full justify-center p-3 fixed left-0 top-0 bg-white dark:bg-neutral-900 dark:text-white">
                 <div className="flex justify-between items-center max-w-4xl w-full">
                     <Link to="/" className="text-xl font-bold">
                         PinIt
@@ -40,7 +40,7 @@ export default function Index() {
                             Log In
                         </li>
                         <li
-                            className="text-sm p-2 px-3 bg-neutral-200 rounded font-semibold hover:bg-neutral-400 cursor-pointer"
+                            className="text-sm p-2 px-3 bg-neutral-200 rounded font-semibold hover:bg-neutral-400 cursor-pointer dark:bg-neutral-700 hover:bg-neutral-800"
                             onClick={() => setSignUpModal(!signUpModal)}
                         >
                             Sign Up
@@ -48,7 +48,7 @@ export default function Index() {
                     </ul>
                 </div>
             </header>
-            <main className="flex justify-center w-full">
+            <main className="flex justify-center w-full dark:text-white">
                 <section className="flex justify-center items-center h-screen w-full max-w-4xl">
                     <h1 className="text-3xl sm:text-5xl font-bold text-center">
                         Discover your next

@@ -41,10 +41,10 @@ export default function LogIn(props: Props) {
             className="absolute left-0 top-0 bg-neutral-800/50 w-full h-screen flex justify-center items-center"
             style={props.logInModal ? { display: 'flex' } : { display: 'none' }}
         >
-            <div className="flex flex-col p-5 bg-white rounded">
+            <div className="flex flex-col p-5 bg-white rounded dark:bg-neutral-800 dark:text-white">
                 <header className="mb-3 flex justify-end">
                     <button
-                        className="p-1 rounded-full font-bold hover:bg-neutral-200"
+                        className="p-1 rounded-full font-bold hover:bg-neutral-200 dark:hover:bg-neutral-900"
                         onClick={() => props.setLogInModal(!props.logInModal)}
                     >
                         <svg
@@ -72,7 +72,7 @@ export default function LogIn(props: Props) {
                             email.valid
                                 ? 'border-neutral-200'
                                 : 'border-red-400'
-                        } border text-base rounded`}
+                        } border text-base rounded bg-transparent`}
                         placeholder="example@pinit.com"
                         onInput={(e) => {
                             let value = e.currentTarget.value;
@@ -89,7 +89,7 @@ export default function LogIn(props: Props) {
                             password.valid
                                 ? 'border-neutral-200'
                                 : 'border-red-400'
-                        } border text-base rounded`}
+                        } border text-base rounded bg-transparent`}
                         placeholder="secretpwd321"
                         onInput={(e) => {
                             let value = e.currentTarget.value;
@@ -109,7 +109,7 @@ export default function LogIn(props: Props) {
                     </span>
                     <Link
                         to="/forgot-password"
-                        className="text-sm font-semibold mt-1 d-block mr-auto text-neutral-800 hover:text-black hover:underline"
+                        className="text-sm font-semibold mt-1 d-block mr-auto text-neutral-800 hover:text-black dark:hover:text-white hover:underline dark:text-neutral-400"
                     >
                         Forgot your password?
                     </Link>
@@ -121,7 +121,7 @@ export default function LogIn(props: Props) {
                     </button>
 
                     <button
-                        className="mt-3 text-xs text-neutral-800 hover:text-black hover:underline"
+                        className="mt-3 text-xs text-neutral-800 hover:text-black dark:hover:text-white hover:underline dark:text-neutral-400"
                         onClick={(e) => {
                             e.preventDefault();
                             props.setLogInModal(false);
