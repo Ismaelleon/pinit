@@ -1,5 +1,5 @@
 import Navbar from '../components/navbar';
-import { BiExit, BiSolidUserCircle } from 'react-icons/bi';
+import { BiSolidUserCircle } from 'react-icons/bi';
 import { useQuery } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import ProfileLoading from '../components/profile-loading';
@@ -43,16 +43,6 @@ export default function Profile() {
                                 {data.verified && (
                                     <MdVerified className="ml-2 text-lg text-red-600" />
                                 )}
-                                <button
-                                    className="p-2 hover:bg-neutral-300 rounded-full ml-2"
-                                    onClick={() => {
-                                        document.cookie =
-                                            'token=;Expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-                                        navigate('/');
-                                    }}
-                                >
-                                    <BiExit className="text-xl text-red-500" />
-                                </button>
                             </section>
                         </header>
                         {data.boards.length > 0 ? (
