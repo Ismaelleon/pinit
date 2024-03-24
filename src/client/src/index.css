@@ -744,6 +744,22 @@ video {
   max-height: 9rem;
 }
 
+.min-h-10 {
+  min-height: 2.5rem;
+}
+
+.min-h-8 {
+  min-height: 2rem;
+}
+
+.min-h-20 {
+  min-height: 5rem;
+}
+
+.min-h-24 {
+  min-height: 6rem;
+}
+
 .w-11\/12 {
   width: 91.666667%;
 }

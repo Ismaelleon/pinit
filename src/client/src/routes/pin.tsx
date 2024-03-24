@@ -137,7 +137,7 @@ export default function Pin() {
                                 <h3 className="text-lg font-bold mt-6 mb-2">
                                     Comments
                                 </h3>
-                                <section className="overflow-scroll max-h-36">
+                                <section className="overflow-scroll min-h-24 max-h-36">
                                     {data.comments.length === 0 && (
                                         <p>
                                             There are not comments yet. Add one
