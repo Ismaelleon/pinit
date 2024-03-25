@@ -20,14 +20,18 @@ const port = process.env.PORT || 8080;
 
 // Serve index.html if client does not request a static file
 app.use((req, res, next) => {
-    if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
-        next();
-    } else {
-        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-        res.header('Expires', '-1');
-        res.header('Pragma', 'no-cache');
-        res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-    }
+	if (req.method === 'GET') {
+		if (/(.ico|.js|.css|.jpg|.png|.map)$/i.test(req.path)) {
+			next();
+		} else {
+			res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+			res.header('Expires', '-1');
+			res.header('Pragma', 'no-cache');
+			res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+		}
+	}
+
+	next();
 });
 
 // middlewares

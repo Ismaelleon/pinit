@@ -50,6 +50,9 @@ async function newPin(req: Request, res: Response) {
             options,
         );
 
+		// Save image url with compression option
+		result.secure_url = result.secure_url.replace('/upload', '/upload/q_auto:low');
+
         let pinId = new mongoose.mongo.ObjectId();
         let newPin = new Pin({
             title,
