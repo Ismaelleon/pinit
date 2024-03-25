@@ -29,9 +29,10 @@ app.use((req, res, next) => {
 			res.header('Pragma', 'no-cache');
 			res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 		}
+	} else {
+		next();
 	}
 
-	next();
 });
 
 // middlewares
