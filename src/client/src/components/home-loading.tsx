@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import Navbar from './navbar';
 
-export default function HomeLoading () {
+export default function HomeLoading() {
     return (
         <>
             <Navbar />
@@ -25,7 +25,7 @@ export default function HomeLoading () {
                                 <div className="w-11/12 h-4 rounded bg-neutral-400"></div>
                             </span>
                         </section>
-                        
+
                         <section>
                             <div className="w-full h-80 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>
@@ -34,7 +34,7 @@ export default function HomeLoading () {
                                 <div className="w-11/12 h-4 rounded bg-neutral-400"></div>
                             </span>
                         </section>
-                        
+
                         <section>
                             <div className="w-full h-64 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>
@@ -52,7 +52,7 @@ export default function HomeLoading () {
                                 <div className="w-11/12 h-4 rounded bg-neutral-400"></div>
                             </span>
                         </section>
-                        
+
                         <section>
                             <div className="w-full h-72 rounded bg-neutral-400"></div>
                             <div className="w-full h-5 rounded bg-neutral-400 mt-2"></div>

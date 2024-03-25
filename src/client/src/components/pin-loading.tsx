@@ -1,6 +1,6 @@
 import Navbar from './navbar';
 
-export default function PinLoading () {
+export default function PinLoading() {
     return (
         <>
             <Navbar />

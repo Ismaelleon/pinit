@@ -1,8 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-	content: ["./src/components/*.tsx", "./src/routes/*.tsx"],
-	theme: {
-		extend: {},
-	},
-	plugins: [],
+    content: ['./src/components/*.tsx', './src/routes/*.tsx'],
+	darkMode: 'selector',
+    theme: {
+        extend: {},
+    },
+    plugins: [],
 };
