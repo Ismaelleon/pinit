@@ -194,7 +194,7 @@ async function likeCommentPin(req: Request, res: Response) {
             return res.sendStatus(401).end();
         }
 
-        let { pinId, _id } = req.body;
+        const { pinId, _id } = req.body;
         const pin = await Pin.findOne({
             _id: new mongoose.Types.ObjectId(pinId),
         });
@@ -206,7 +206,7 @@ async function likeCommentPin(req: Request, res: Response) {
         let likedComment = {};
 
         pin.comments.map((comment) => {
-            if (comment._id === _id) {
+            if (comment._id!.toString() === _id) {
                 if (comment.likes.length > 0) {
                     comment.likes.map((like, index) => {
                         if (like === user!.name) {
