@@ -15,7 +15,7 @@ async function newPin(req: Request, res: Response) {
             return res.sendStatus(401).end();
         }
 
-        const { title, content, url, boardName } = req.body;
+        const { title, content, url, boardName, date } = req.body;
 
         if (
             title.length < 4 ||
@@ -58,6 +58,7 @@ async function newPin(req: Request, res: Response) {
             title,
             content,
             url,
+			date,
             image: {
                 url: result.secure_url,
                 public_id: result.public_id,

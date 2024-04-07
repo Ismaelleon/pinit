@@ -8,6 +8,7 @@ const pinSchema = new mongoose.Schema({
         public_id: String,
     },
     url: String,
+	date: String,
     author: String,
     board: {
         type: String,

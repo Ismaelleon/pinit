@@ -67,6 +67,7 @@ export default function Create() {
         body.append('title', title.value);
         body.append('content', content);
         body.append('url', url);
+		body.append('date', new Date().toLocaleDateString());
         body.append('image', image.value);
         body.append('boardName', board);
 
