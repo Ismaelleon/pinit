@@ -8,7 +8,7 @@ export default function Create() {
     const [title, setTitle] = useState({ value: '', error: false }),
         [content, setContent] = useState(''),
         [url, setUrl] = useState(''),
-        [image, setImage] = useState<any>({ value: null, error: false }),
+        [image, setImage] = useState<object>({ value: null, error: false }),
         [board, setBoard] = useState('new-board'),
         [boards, setBoards] = useState([]),
         [newBoard, setNewBoard] = useState({ value: '', error: false });
@@ -23,7 +23,7 @@ export default function Create() {
             method: 'POST',
         }).then(async (res) => {
             if (res.status === 200) {
-                let user = await res.json();
+                const user = await res.json();
 
                 setBoards(user.boards!);
             } else if (res.status === 401) {
@@ -71,13 +71,18 @@ export default function Create() {
         body.append('image', image.value);
         body.append('boardName', board);
 
+		bar.current.staticStart(70);
+
         fetch('/api/pin/new', {
             method: 'post',
             body,
         }).then(async (res) => {
+			bar.current.complete();
+
             if (res.status === 200) {
-                let { id } = await res.json();
-                navigate(`/pin/${id}`);
+                const { id } = await res.json();
+				setTimeout(() => navigate(`/pin/${id}`), 1500)
+				
             } else {
                 if (title.value.length < 4) {
                     setTitle({ value: title.value, error: true });
