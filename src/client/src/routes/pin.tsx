@@ -7,6 +7,14 @@ import PinLoading from '../components/pin-loading';
 import { BiLink, BiSend, BiSolidUserCircle } from 'react-icons/bi';
 import Comment from '../components/comment';
 
+interface Comment {
+	content: string;
+	author: string;
+	date: string;
+	likes: Array<string>;
+	_id: string;
+}
+
 export default function Pin() {
     const [userData, setUserData] = useState({
         name: '',
@@ -19,7 +27,7 @@ export default function Pin() {
     const queryClient = useQueryClient();
 
     const commentMutation = useMutation(sendComment, {
-        onSuccess: (data) => {
+        onSuccess: () => {
             queryClient.invalidateQueries('getPin');
         },
     });
@@ -34,7 +42,7 @@ export default function Pin() {
             );
 
             if (res.status === 200) {
-                let response = await res.json();
+                const response = await res.json();
                 getUserData();
 
                 return response;
@@ -51,7 +59,7 @@ export default function Pin() {
             });
 
             if (res.status === 200) {
-                let user = await res.json();
+                const user = await res.json();
                 setUserData(user);
             } else {
                 navigate('/');
@@ -76,7 +84,7 @@ export default function Pin() {
                 },
             });
 
-            let data = await res.json();
+            const data = await res.json();
 
             return data;
         } catch (err) {
@@ -96,7 +104,7 @@ export default function Pin() {
                     <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-2">
                         <img
                             src={data.image.url}
-                            className="w-full rounded mb-3 sm:w-1/2"
+                            className="w-full rounded mb-3 sm:w-1/2 self-start"
                         />
                         <section className="sm:w-1/2 h-full relative">
                             <PinOptions
@@ -104,13 +112,12 @@ export default function Pin() {
                                 pinAuthor={data.author}
                                 image={data.image.url}
                                 pinId={data._id}
-                                filled={true}
                                 redirect={true}
                             />
                             <section className="p-2">
                                 {data.url === '' ? (
                                     <h2
-                                        className={`text-xl font-bold mb-2 ${
+                                        className={`text-xl font-bold ${
                                             data.url !== '' && 'hover:underline'
                                         }}`}
                                     >
@@ -118,14 +125,16 @@ export default function Pin() {
                                     </h2>
                                 ) : (
                                     <a
-                                        className="flex flex-row gap-2 items-center text-xl font-bold mb-2 hover:underline"
+                                        className="flex flex-row gap-2 items-center text-xl font-bold hover:underline"
                                         href={data.url}
                                         target="_blank"
+										rel="noreferrer"
                                     >
                                         {data.title}
                                         <BiLink size={24} />
                                     </a>
                                 )}
+								<span className="text-sm text-neutral-400 mb-3">{data.date}</span>
                                 <p className="text-base mb-3">{data.content}</p>
                                 <Link
                                     to={`/user/${data.author}`}
@@ -144,7 +153,7 @@ export default function Pin() {
                                             to start a conversation.
                                         </p>
                                     )}
-                                    {data.comments.map((comment, index) => (
+                                    {data.comments.map((comment: Comment, index: number) => (
                                         <Comment
                                             content={comment.content}
                                             author={comment.author}
