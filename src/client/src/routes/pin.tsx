@@ -104,7 +104,7 @@ export default function Pin() {
                     <section className="flex flex-col max-w-3xl w-full sm:flex-row gap-2">
                         <img
                             src={data.image.url}
-                            className="w-full rounded mb-3 sm:w-1/2"
+                            className="w-full rounded mb-3 sm:w-1/2 self-start"
                         />
                         <section className="sm:w-1/2 h-full relative">
                             <PinOptions
