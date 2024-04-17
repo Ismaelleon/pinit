@@ -28,10 +28,10 @@ async function newPin(req: Request, res: Response) {
         const imageFileName = req.file?.filename;
 
         // Resize and compress image
-        let image = await Jimp.read(
+        const image = await Jimp.read(
             path.join(__dirname, `../public/images/${imageFileName}`),
         );
-        let imageWidth = image.getWidth();
+        const imageWidth = image.getWidth();
         await image
             .resize(imageWidth / 2, Jimp.AUTO)
             .quality(70)
@@ -53,8 +53,8 @@ async function newPin(req: Request, res: Response) {
 		// Save image url with compression option
 		result.secure_url = result.secure_url.replace('/upload', '/upload/q_auto:low');
 
-        let pinId = new mongoose.mongo.ObjectId();
-        let newPin = new Pin({
+        const pinId = new mongoose.mongo.ObjectId();
+        const newPin = new Pin({
             title,
             content,
             url,
@@ -130,7 +130,7 @@ async function deletePin(req: Request, res: Response) {
             return res.sendStatus(401).end();
         }
 
-        let { id } = req.params;
+        const { id } = req.params;
         const pin = await Pin.findOne({ _id: id });
 
         if (pin === null) {
@@ -167,7 +167,7 @@ async function commentPin(req: Request, res: Response) {
             return res.sendStatus(401).end();
         }
 
-        let { id, content, author, date } = req.body;
+        const { id, content, author, date } = req.body;
         const pin = await Pin.findOne({ _id: new mongoose.Types.ObjectId(id) });
 
         if (pin === null) {
@@ -179,6 +179,7 @@ async function commentPin(req: Request, res: Response) {
             author,
             date,
             likes: [],
+			replies: [],
             _id: new mongoose.Types.ObjectId(),
         });
 
@@ -243,7 +244,7 @@ async function uncommentPin(req: Request, res: Response) {
             return res.sendStatus(401).end();
         }
 
-        let { pinId, _id } = req.body;
+        const { pinId, _id } = req.body;
         const pin = await Pin.findOne({
             _id: new mongoose.Types.ObjectId(pinId),
         });
