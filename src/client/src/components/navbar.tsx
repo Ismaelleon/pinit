@@ -8,7 +8,7 @@ export default function Navbar() {
 	const [accountDropDown, setAccountDropDown] = useState(false);
 
     return (
-        <nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50 dark:bg-neutral-900 dark:text-white">
+        <nav className="flex w-full justify-center py-2 px-4 fixed left-0 top-0 bg-white items-center z-50 dark:bg-neutral-900 dark:text-white shadow">
             <div className="flex justify-between items-center max-w-4xl w-full">
                 <Link to="/home" className="text-xl font-bold mr-6">
                     Pinit
@@ -44,38 +44,39 @@ export default function Navbar() {
                             <p className="hidden sm:flex">Create</p>
                         </Link>
                     </li>
-                    <li className="flex flex-col">
-						<span 
-							className="flex flex-row items-center relative cursor-pointer"
-							onClick={() => setAccountDropDown(!accountDropDown)}
+					<li>
+						<Link
+							to="/profile"
+                            className="text-sm flex flex-row items-center"
 						>
 							<BiSolidUserCircle size={32} />
+						</Link>
+					</li>
+                    <li className="p-2 mr-3 relative">
+						<span 
+							className="flex flex-row items-center cursor-pointer"
+							onClick={() => setAccountDropDown(!accountDropDown)}
+						>
 							<BiChevronDown size={16} />
 						</span>
-						<ul className={`fixed top-[40px] left-0 bg-white p-3 w-full sm:w-auto sm:left-auto sm:-translate-x-full sm:ml-[48px] dark:bg-neutral-900 ${!accountDropDown && 'hidden'}`}>
-							<li className="py-2 sm:py-0">
-								<Link to="/profile" className="flex flex-row items-center gap-2 hover:underline">
-									<BiSolidUserCircle size={24} className="sm:scale-[0.75]" />
-									Profile
-								</Link>
-							</li>
-							<li className="py-2 sm:py-0">
-								<Link to="/settings" className="flex flex-row items-center gap-2 hover:underline">
-									<BiSolidCog size={24} className="sm:scale-[0.75]" />
+						<ul className={`fixed w-full top-[40px] mt-3 right-0 bg-white p-2 shadow sm:absolute sm:w-auto sm:overflow-hidden sm:rounded-sm dark:bg-neutral-900 ${!accountDropDown && 'hidden'}`}>
+							<li>
+								<Link to="/settings" className="flex flex-row items-center gap-2 py-2 p-2 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900">
+									<BiSolidCog className="text-xl sm:text-lg" />
 									Settings	
 								</Link>
 							</li>
-							<li className="py-2 sm:py-0">
+							<li>
 								<Link 
 									to="#" 
-									className="flex flex-row items-center gap-2 hover:underline"
+									className="flex flex-row items-center gap-2 py-2 p-2 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900"
                                     onClick={() => {
                                         document.cookie =
                                             'token=;Expires=Thu, 01 Jan 1970 00:00:00 UTC;';
                                         navigate('/');
                                     }}
 								>
-									<BiExit size={24} className="text-red-600 sm:scale-[0.75]" />
+									<BiExit className="text-red-600 text-xl sm:text-lg" />
 									Log Out	
 								</Link>
 							</li>
