@@ -52,7 +52,7 @@ export default function Navbar() {
 							<BiSolidUserCircle size={32} />
 						</Link>
 					</li>
-                    <li className="p-2 mr-3 relative">
+                    <li className="pl-2 relative">
 						<span 
 							className="flex flex-row items-center cursor-pointer"
 							onClick={() => setAccountDropDown(!accountDropDown)}
