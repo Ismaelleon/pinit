@@ -59,7 +59,7 @@ export default function Navbar() {
 						>
 							<BiChevronDown size={16} />
 						</span>
-						<ul className={`fixed w-full top-[40px] mt-3 right-0 bg-white p-2 shadow sm:absolute sm:w-auto sm:overflow-hidden sm:rounded-sm dark:bg-neutral-900 ${!accountDropDown && 'hidden'}`}>
+						<ul className={`fixed w-full top-[40px] mt-3 right-0 bg-white p-2 shadow absolute sm:w-auto sm:overflow-hidden sm:rounded-sm dark:bg-neutral-900 ${!accountDropDown && 'hidden'}`}>
 							<li>
 								<Link to="/settings" className="flex flex-row items-center gap-2 py-2 p-2 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-900">
 									<BiSolidCog className="text-xl sm:text-lg" />
