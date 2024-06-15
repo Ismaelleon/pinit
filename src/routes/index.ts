@@ -2,7 +2,7 @@ import express, { Router } from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
 import multer from 'multer';
-import { signUp, logIn, activate } from '../controllers/auth';
+import { signUp, logIn, activate, sendPasswordResetMail, setPassword } from '../controllers/auth';
 import {
     newPin,
     getLatestPins,
@@ -36,6 +36,8 @@ const router: Router = express.Router();
 router.post('/sign-up', signUp);
 router.post('/log-in', logIn);
 router.get('/activate/:activation_key', activate);
+router.post('/reset-password', sendPasswordResetMail);
+router.post('/set-password', setPassword);
 
 router.post('/board/new', newBoard);
 router.post('/board/:id', getBoard);
