@@ -213,13 +213,18 @@ async function likeCommentPin(req: Request, res: Response) {
         pin.comments.map((comment) => {
             if (comment._id!.toString() === _id) {
                 if (comment.likes.length > 0) {
-                    comment.likes.map((like, index) => {
-                        if (like === user!.name) {
-                            comment.likes.splice(index, 1);
-                        } else {
-                            comment.likes.push(user!.name);
-                        }
-                    });
+					let liked = false;
+
+					for (let i = 0; i < comment.likes.length; i++) {
+						if (comment.likes[i] === user!.name) {
+							liked = true;
+							comment.likes.splice(i, 1);
+						}
+					}
+
+					if (!liked) {
+						comment.likes.push(user!.name);
+					}
                 } else {
                     comment.likes.push(user!.name);
                 }
