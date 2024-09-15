@@ -12,7 +12,7 @@ export default function SignUp(props: Props) {
         [email, setEmail] = useState({ value: '', valid: true }),
         [password, setPassword] = useState({ value: '', valid: true }),
         [birthday, setBirthday] = useState({ value: '', valid: true }),
-        [error, setError] = useState(false);
+        [error, setError] = useState({ type: '', value: false });
 
     const navigate = useNavigate();
 
@@ -33,10 +33,16 @@ export default function SignUp(props: Props) {
                 },
             }).then((res) => {
                 if (res.status === 200) {
-                    setError(false);
+                    setError({ type: '', value: false });
                     navigate('/home');
-                } else {
-                    setError(true);
+                } else if (res.status === 400) {
+					setError({ type: 'Bad Request', value: true });
+					setName({ value: name.value, valid: false });
+					setEmail({ value: email.value, valid: false });
+					setPassword({ value: password.value, valid: false });
+					setBirthday({ value: birthday.value, valid: false });
+				} else if (res.status === 409) {
+                    setError({ type: 'Conflict', value: true });
                 }
             });
         }
@@ -86,13 +92,13 @@ export default function SignUp(props: Props) {
                             let valid = value.length > 5;
 
                             setName({ value, valid });
-                            setError(false);
+                            setError({ type: error.type, value: false });
                         }}
                     />
                     <span
                         className="text-sm mt-1 d-block mr-auto text-red-400"
                         style={
-                            error ? { display: 'block' } : { display: 'none' }
+                            error.value && error.type === 'Conflict' ? { display: 'block' } : { display: 'none' }
                         }
                     >
                         Name is too short or is already used
@@ -111,13 +117,13 @@ export default function SignUp(props: Props) {
                             let valid = value.length > 3;
 
                             setEmail({ value, valid });
-                            setError(false);
+                            setError({ type: error.type, value: true });
                         }}
                     />
                     <span
                         className="text-sm mt-1 d-block mr-auto text-red-400"
                         style={
-                            error ? { display: 'block' } : { display: 'none' }
+                            error.value && error.type === 'Conflict' ? { display: 'block' } : { display: 'none' }
                         }
                     >
                         E-mail already signed-up
@@ -132,8 +138,8 @@ export default function SignUp(props: Props) {
                         } border text-base rounded bg-transparent`}
                         placeholder="secretpwd321"
                         onInput={(e) => {
-                            let value = e.currentTarget.value;
-                            let valid = value.length > 7;
+                            const value = e.currentTarget.value;
+                            const valid = value.length > 7;
 
                             setPassword({ value, valid });
                         }}
@@ -147,8 +153,8 @@ export default function SignUp(props: Props) {
                                 : 'border-red-400'
                         } border text-base rounded w-full bg-transparent`}
                         onInput={(e) => {
-                            let value = e.currentTarget.value;
-                            let valid =
+                            const value = e.currentTarget.value;
+                            const valid =
                                 new Date(Date.now()).getFullYear() -
                                     new Date(value).getFullYear() >
                                 18;
@@ -156,6 +162,14 @@ export default function SignUp(props: Props) {
                             setBirthday({ value, valid });
                         }}
                     />
+                    <span
+                        className="text-sm mt-1 d-block mr-auto text-red-400"
+                        style={
+                            error.value && error.type === 'Bad Request' ? { display: 'block' } : { display: 'none' }
+                        }
+                    >
+						Inputs not filled
+                    </span>
                     <button
                         className={`text-base mt-3 p-2 bg-red-600 text-white rounded font-semibold hover:bg-red-800`}
                         onClick={submitForm}

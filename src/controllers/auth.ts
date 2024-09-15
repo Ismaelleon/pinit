@@ -1,23 +1,32 @@
 import { Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { MailerSend, Recipient, EmailParams, Sender } from 'mailersend';
 import User from '../models/user';
-import nodemailer from 'nodemailer';
 import crypto from 'crypto';
 import Token from '../models/token';
 
+const mailerSend = new MailerSend({
+	apiKey: process.env.MAIL_API_KEY!,
+});
+
 async function signUp(req: Request, res: Response) {
     try {
-        const { name, email, password, date } = req.body;
+        const { name, email, password, birthday } = req.body;
 
+		// Throw error if inputs not filled
+		if (name === '' || email === '' || password === '' || birthday === '') {
+			return res.status(400).end();
+		}
+
+		// Check if email is already used
         let user = await User.findOne({ email });
-
         if (user !== null) {
             return res.status(409).end();
         }
 
+		// Check if name is already used
         user = await User.findOne({ name });
-
         if (user !== null) {
             return res.status(409).end();
         }
@@ -29,26 +38,20 @@ async function signUp(req: Request, res: Response) {
             email,
             password,
             URL,
-            date,
+            birthday,
             activationKey,
         });
 
         await newUser.save();
 
-        const transporter = nodemailer.createTransport({
-            host: 'sandbox.smtp.mailtrap.io',
-            port: 2525,
-            auth: {
-                user: process.env.MAIL_USER,
-                pass: process.env.MAIL_PASSWORD,
-            },
-        });
+		const recipients = [new Recipient(email, 'Recipient')];
+		const sentFrom = new Sender('auth@domain.com', 'Pinit')
 
-        await transporter.sendMail({
-            from: 'mail@pinit.com', to: email,
-            subject: 'Activate your account',
-            text: '',
-            html: `
+		const emailParams = new EmailParams()
+			.setFrom(sentFrom)
+			.setTo(recipients)
+			.setSubject('Activate your account')
+			.setHtml(`
 				<div style="display: flex; flex-direction: column; align-items: center;">
 					<h1 style="font-size: 24px; font-family: "ui-sans-serif, system-ui"">PinIt</h1>
 					<a 
@@ -67,8 +70,9 @@ async function signUp(req: Request, res: Response) {
 						Activate your account
 					</a>
 				</div>
-			`,
-        });
+			`);
+
+		mailerSend.email.send(emailParams);
 
         const token = jwt.sign(name, process.env.JWT_SECRET!);
 
@@ -129,14 +133,14 @@ async function sendPasswordResetMail (req: Request, res: Response) {
 			return res.sendStatus(404);
 		}
 
-        const transporter = nodemailer.createTransport({
+        /*const transporter = nodemailer.createTransport({
             host: 'sandbox.smtp.mailtrap.io',
             port: 2525,
             auth: {
                 user: process.env.MAIL_USER,
                 pass: process.env.MAIL_PASSWORD,
             },
-        });
+        });*/
 
 		// Create temporary token for password reset
         const tokenValue = crypto.randomBytes(16).toString('hex');
@@ -147,7 +151,7 @@ async function sendPasswordResetMail (req: Request, res: Response) {
 
 		await token.save();
 
-        await transporter.sendMail({
+        /*await transporter.sendMail({
             from: 'mail@pinit.com',
             to: email,
             subject: 'Reset your password',
@@ -157,7 +161,7 @@ async function sendPasswordResetMail (req: Request, res: Response) {
 					Activate your account
 				</a>
 			`,
-        });
+        });*/
 
 		return res.end();
 	} catch (err) {
