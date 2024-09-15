@@ -108,7 +108,7 @@ export default function LogIn(props: Props) {
                         E-mail or password is incorrect
                     </span>
                     <Link
-                        to="/forgot-password"
+                        to="/reset-password"
                         className="text-sm font-semibold mt-1 d-block mr-auto text-neutral-800 hover:text-black dark:hover:text-white hover:underline dark:text-neutral-400"
                     >
                         Forgot your password?

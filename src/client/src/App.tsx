@@ -14,12 +14,17 @@ import Profile from './routes/profile';
 import Board from './routes/board';
 import User from './routes/user';
 import Settings from './routes/settings';
+import ResetPassword from './routes/reset-password';
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Index />,
     },
+	{
+        path: '/reset-password',
+        element: <ResetPassword />,
+	},
     {
         path: '/activate/:activation_key',
         element: <Activate />,
