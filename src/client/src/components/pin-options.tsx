@@ -61,7 +61,7 @@ export default function PinOptions({
             >
                 <BiDotsHorizontal className="text-2xl" />
                 <ul
-                    className="flex-col list-none absolute bg-white shadow p-2 rounded-sm mt-3 -ml-2 dark:bg-neutral-800 dark:text-white"
+                    className="flex-col list-none absolute bg-white p-2 rounded-sm mt-3 -ml-2 dark:bg-neutral-800 dark:text-white shadow"
                     style={options ? { display: 'flex' } : { display: 'none' }}
                 >
                     <li
