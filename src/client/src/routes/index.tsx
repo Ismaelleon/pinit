@@ -40,7 +40,7 @@ export default function Index() {
                             Log In
                         </li>
                         <li
-                            className="text-sm p-2 px-3 bg-neutral-200 rounded font-semibold hover:bg-neutral-400 cursor-pointer dark:bg-neutral-700 hover:bg-neutral-800"
+                            className="text-sm p-2 px-3 bg-neutral-200 rounded font-semibold hover:bg-neutral-400 cursor-pointer dark:bg-neutral-700 dark:hover:bg-neutral-800"
                             onClick={() => setSignUpModal(!signUpModal)}
                         >
                             Sign Up
